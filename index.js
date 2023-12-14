@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 /*
     @param org = String
     @param repo = String
@@ -46,7 +48,8 @@ async function buildGitHubRepo(org, repo, vis, token) {
         console.error('Error:', error.message);
         return {
             success: false,
-            message: 'Internal server error'
+            message: 'Internal server error',
+            status: error.response ? error.response.status : undefined
         };
     }
 }
