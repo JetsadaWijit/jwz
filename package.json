@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "JetsadaWijit <ze_ro_owen@hotmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
 }
