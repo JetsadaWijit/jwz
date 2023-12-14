@@ -1,3 +1,9 @@
+/*
+    @param org = String
+    @param repo = String
+    @param vis = String
+    @param token = String
+*/
 async function buildGitHubRepo(org, repo, vis, token) {
     // GitHub API endpoint to create a repository in an organization
     const createRepoUrl = `https://api.github.com/orgs/${org}/repos`;
