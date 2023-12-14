@@ -1,0 +1,12 @@
+{
+  "name": "jwz",
+  "version": "1.0.0",
+  "description": "Utils",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "JetsadaWijit <ze_ro_owen@hotmail.com>",
+  "license": "MIT"
+}
