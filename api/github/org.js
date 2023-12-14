@@ -6,7 +6,7 @@ const axios = require('axios');
     @param vis = String
     @param token = String
 */
-async function buildRepo(org, repo, vis, token) {
+async function buildGitHubRepo(org, repo, vis, token) {
     // GitHub API endpoint to create a repository in an organization
     const createRepoUrl = `https://api.github.com/orgs/${org}/repos`;
 
@@ -54,4 +54,4 @@ async function buildRepo(org, repo, vis, token) {
     }
 }
 
-module.exports = buildRepo;
+module.exports = buildGitHubRepo;
