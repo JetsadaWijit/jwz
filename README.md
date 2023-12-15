@@ -21,7 +21,7 @@
 
     const res = await buildGitHubRepo(org, repo, vis, token);
 
-    consoole.log(res);
+    console.log(res);
     ```
 ### `inviteGitHubCollaborators`
 - `usage`
