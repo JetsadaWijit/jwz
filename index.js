@@ -22,15 +22,6 @@ function readPropertiesFile(filePath) {
   return config;
 }
 
-const filePath = 'config.properties';
-const config = readPropertiesFile(filePath);
-const name = 'owen';
-
-// Replace placeholders in the url
-const url = config.url.replace('${name}', name);
-
-console.log(url);
-
 /////////////
 // GitHub //
 ///////////
