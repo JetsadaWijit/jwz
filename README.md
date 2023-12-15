@@ -3,7 +3,7 @@
 - [buildGitHubRepo](#buildGitHubRepo)
 - [inviteGitHubCollaborators](#invitegithubcollaborators)
 #### `buildGitHubRepo`
-- usage
+- `usage`
     ```
     import { buildGitHubRepo } from 'jwz';
 
