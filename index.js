@@ -54,4 +54,32 @@ async function buildGitHubRepo(org, repo, vis, token) {
     }
 }
 
-module.exports = buildGitHubRepo;
+/*
+    @param org = String
+    @param repo = String
+    @param collaborators = array
+    @param token = String
+*/
+async function inviteGitHubCollaborators(org, repo, collaborators, token) {
+  try {
+    // Invite collaborators
+    await Promise.all(collaborators.map(async collaborator => {
+      await axios.put(`https://api.github.com/repos/${org}/${repo}/collaborators/${collaborator}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+      console.log(`Invitation sent to ${collaborator}`);
+    }));
+
+    console.log('Collaborators invited successfully.');
+  } catch (error) {
+    console.error('Error inviting collaborators:', error.response ? error.response.data : error.message);
+  }
+}
+
+module.exports ={ 
+    buildGitHubRepo,
+    inviteGitHubCollaborators
+};
