@@ -1,5 +1,38 @@
 const axios = require('axios');
 
+////////////////
+// Essential //
+//////////////
+import { readFileSync } from 'fs';
+
+function readPropertiesFile(filePath) {
+  const fileContent = readFileSync(filePath, 'utf-8');
+  const lines = fileContent.split('\n');
+  const config = {};
+
+  lines.forEach(line => {
+    const [key, value] = line.split('=');
+    config[key.trim()] = value.trim();
+  });
+
+  return config;
+}
+
+const filePath = 'config.properties';
+const config = readPropertiesFile(filePath);
+const name = 'owen';
+
+// Replace placeholders in the url
+const url = config.url.replace('${name}', name);
+
+console.log(url);
+
+/////////////
+// GitHub //
+///////////
+//////////////////////
+// buildGitHubRepo //
+////////////////////
 /*
     @param org = String
     @param repo = String
@@ -54,6 +87,9 @@ async function buildGitHubRepo(org, repo, vis, token) {
     }
 }
 
+////////////////////////////////
+// inviteGitHubCollaborators //
+//////////////////////////////
 /*
     @param org = String
     @param repo = String
