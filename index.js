@@ -35,8 +35,18 @@ function readPropertiesFile(filePath) {
     @param token = String
 */
 async function buildGitHubRepo(org, repo, vis, token) {
-    // GitHub API endpoint to create a repository in an organization
-    const createRepoUrl = `https://api.github.com/orgs/${org}/repos`;
+    // Get org repo url
+    const filePath = 'GitHub/api.properties';
+    const config = readPropertiesFile(filePath);
+    const replacements = {
+      organization: org
+    };
+
+    var createRepoUrl = config.repourl;
+    for (const placeholder in replacements) {
+        const placeholderValue = replacements[placeholder];
+        createRepoUrl = createRepoUrl.replace(new RegExp(`\\$\\{${placeholder}\\}`, 'g'), placeholderValue);
+    }
 
     // Request headers
     const headers = {
@@ -81,6 +91,8 @@ async function buildGitHubRepo(org, repo, vis, token) {
         };
     }
 }
+
+
 
 ////////////////////////////////
 // inviteGitHubCollaborators //
