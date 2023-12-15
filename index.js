@@ -11,8 +11,12 @@ function readPropertiesFile(filePath) {
   const config = {};
 
   lines.forEach(line => {
-    const [key, value] = line.split('=');
-    config[key.trim()] = value.trim();
+    const trimmedLine = line.trim();
+    if (trimmedLine && trimmedLine.includes('=')) {
+      const [key, ...valueParts] = trimmedLine.split('=');
+      const value = valueParts.join('=').trim();
+      config[key.trim()] = value;
+    }
   });
 
   return config;
