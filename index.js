@@ -143,25 +143,31 @@ async function inviteGitHubCollaborators(org, repo, collaborators, token) {
 ///////////////////////
 // deleteGitHubRepo //
 /////////////////////
-function deleteGitHubRepos(org, repos, token) {
-    // Get org repo url
-    const filePath = path.join(__dirname, 'github/api.properties');
-    const config = readPropertiesFile(filePath);
+async function deleteGitHubRepos(org, repos, token) {
+    try {
+        // Get org repo URL
+        const filePath = path.join(__dirname, 'github/api.properties');
+        const config = readPropertiesFile(filePath);
 
-    const deleteRequests = repos.map(repo => {
-        const replacements = {
-            organization: org,
-            repository: repo
-        };
-        axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        })
-    });
+        const deleteRequests = repos.map(async repo => {
+            const replacements = {
+                organization: org,
+                repository: repo
+            };
+            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+        });
 
-    return Promise.all(deleteRequests);
+        return await Promise.all(deleteRequests);
+    } catch (error) {
+        // Handle error if needed
+        console.error('Error deleting GitHub repos:', error);
+        throw error; // Re-throw the error if needed
+    }
 }
 
 module.exports ={ 
