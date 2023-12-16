@@ -10,7 +10,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["api", "git", "github", "jw", "utils"],
+  "keywords": [
+    "api",
+    "git",
+    "github",
+    "jw",
+    "utils"
+  ],
   "author": "JetsadaWijit <ze_ro_owen@hotmail.com>",
   "license": "MIT",
   "dependencies": {
