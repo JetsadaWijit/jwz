@@ -43,7 +43,7 @@ function replacePlaceholders(url, replacements) {
 */
 async function buildGitHubRepo(org, repo, vis, token) {
     // Get org repo url
-    const filePath = 'node_modules/jwz/GitHub/api.properties';
+    const filePath = 'node_modules/jwz/github/api.properties';
     const config = readPropertiesFile(filePath);
     const replacements = {
       organization: org
@@ -108,7 +108,7 @@ async function buildGitHubRepo(org, repo, vis, token) {
 */
 async function inviteGitHubCollaborators(org, repo, collaborators, token) {
     // Get org repo url
-    const filePath = 'node_modules/jwz/GitHub/api.properties';
+    const filePath = 'node_modules/jwz/github/api.properties';
     const config = readPropertiesFile(filePath);
 
     try {
