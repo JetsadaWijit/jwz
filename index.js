@@ -22,6 +22,14 @@ function readPropertiesFile(filePath) {
   return config;
 }
 
+function replacePlaceholders(url, replacements) {
+  for (const placeholder in replacements) {
+    const placeholderValue = replacements[placeholder];
+    url = url.replace(new RegExp(`\\$\\{${placeholder}\\}`, 'g'), placeholderValue);
+  }
+  return url;
+}
+
 /////////////
 // GitHub //
 ///////////
@@ -42,11 +50,7 @@ async function buildGitHubRepo(org, repo, vis, token) {
       organization: org
     };
 
-    var createRepoUrl = config.repourl;
-    for (const placeholder in replacements) {
-        const placeholderValue = replacements[placeholder];
-        createRepoUrl = createRepoUrl.replace(new RegExp(`\\$\\{${placeholder}\\}`, 'g'), placeholderValue);
-    }
+    var createRepoUrl = replacePlaceholders(config.repourl, replacements)
 
     // Request headers
     const headers = {
@@ -104,22 +108,35 @@ async function buildGitHubRepo(org, repo, vis, token) {
     @param token = String
 */
 async function inviteGitHubCollaborators(org, repo, collaborators, token) {
-  try {
-    // Invite collaborators
-    await Promise.all(collaborators.map(async collaborator => {
-      await axios.put(`https://api.github.com/repos/${org}/${repo}/collaborators/${collaborator}`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github.v3+json',
-        },
-      });
-      console.log(`Invitation sent to ${collaborator}`);
-    }));
+    // Get org repo url
+    const filePath = 'GitHub/api.properties';
+    const config = readPropertiesFile(filePath);
 
-    console.log('Collaborators invited successfully.');
-  } catch (error) {
-    console.error('Error inviting collaborators:', error.response ? error.response.data : error.message);
-  }
+    try {
+        // Invite collaborators
+        await Promise.all(collaborators.map(async collaborator => {
+            const replacements = {
+                organization: org,
+                repository: repo,
+                collaborator: collaborator
+            };
+
+            // Get repo collaborator url
+            var collaboratorUrl = replacePlaceholders(config.repourlcollaborator, replacements)
+
+            await axios.put(collaboratorUrl, {}, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/vnd.github.v3+json',
+                },
+            });
+            console.log(`Invitation sent to ${collaborator}`);
+        }));
+
+        console.log('Collaborators invited successfully.');
+    } catch (error) {
+        console.error('Error inviting collaborators:', error.response ? error.response.data : error.message);
+    }
 }
 
 module.exports ={ 
