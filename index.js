@@ -50,8 +50,6 @@ async function buildGitHubRepo(org, repo, vis, token) {
       organization: org
     };
 
-    var createRepoUrl = replacePlaceholders(config.repourl, replacements)
-
     // Request headers
     const headers = {
         'Content-Type': 'application/json',
@@ -66,7 +64,7 @@ async function buildGitHubRepo(org, repo, vis, token) {
 
     try {
         // Make a POST request to create the repository
-        const createResponse = await axios.post(createRepoUrl, data, { headers });
+        const createResponse = await axios.post(replacePlaceholders(config.repourl, replacements), data, { headers });
 
         // Check if the repository was created successfully
         if (createResponse.status === 201) {
@@ -121,10 +119,7 @@ async function inviteGitHubCollaborators(org, repo, collaborators, token) {
                 collaborator: collaborator
             };
 
-            // Get repo collaborator url
-            var collaboratorUrl = replacePlaceholders(config.repourlcollaborator, replacements)
-
-            await axios.put(collaboratorUrl, {}, {
+            await axios.put(replacePlaceholders(config.repourlcollaborator, replacements), {}, {
                 headers: {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/vnd.github.v3+json',
