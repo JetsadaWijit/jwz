@@ -1,12 +1,12 @@
 # `Function`
 ## `GitHub`
-- [buildGitHubRepo](#buildGitHubRepo)
-- [deleteGitHubRepo](#deletegithubrepo)
+- [buildGitHubRepos](#buildGitHubRepos)
+- [deleteGitHubRepos](#deletegithubrepos)
 - [inviteGitHubCollaborators](#invitegithubcollaborators)
-#### `buildGitHubRepo`
+#### `buildGitHubRepos`
 - `usage`
     ```
-    import { buildGitHubRepo } from 'jwz';
+    import { buildGitHubRepos } from 'jwz';
 
     /*
         @param org = String
@@ -16,11 +16,11 @@
     */
 
     const org = 'your-org-name';
-    var repo = 'your-repo-name';
-    const token = 'your-token';
+    var repos = ['your-repoA', 'your-repoB'];
     var vis = 'public';
+    const token = 'your-token';
 
-    const res = await buildGitHubRepo(org, repo, vis, token);
+    const res = await buildGitHubRepos(org, repos, vis, token);
 
     console.log(res);
     ```
@@ -45,7 +45,7 @@
     ```
 - `note`
     - when code is running it will have output of result
-### `deleteGitHubRepo`
+### `deleteGitHubRepos`
 - `usage`
     ```
     import { deleteGitHubRepo } from "jwz";
