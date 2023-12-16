@@ -134,7 +134,32 @@ async function inviteGitHubCollaborators(org, repo, collaborators, token) {
     }
 }
 
+///////////////////////
+// deleteGitHubRepo //
+/////////////////////
+function deleteGitHubRepo(org, repos, token) {
+    // Get org repo url
+    const filePath = path.join(__dirname, 'github/api.properties');
+    const config = readPropertiesFile(filePath);
+
+    const deleteRequests = repos.map(repo => {
+        const replacements = {
+            organization: org,
+            repository: repo
+        };
+        axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+    });
+
+    return Promise.all(deleteRequests);
+}
+
 module.exports ={ 
     buildGitHubRepo,
+    deleteGitHubRepo,
     inviteGitHubCollaborators
 };
