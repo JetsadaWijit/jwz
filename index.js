@@ -1,5 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path');
 
 ////////////////
 // Essential //
@@ -43,7 +44,7 @@ function replacePlaceholders(url, replacements) {
 */
 async function buildGitHubRepo(org, repo, vis, token) {
     // Get org repo url
-    const filePath = 'node_modules/jwz/github/api.properties';
+    const filePath = path.join(__dirname, 'node_modules', 'jwz', 'github', 'api.properties');
     const config = readPropertiesFile(filePath);
     const replacements = {
       organization: org
@@ -108,7 +109,7 @@ async function buildGitHubRepo(org, repo, vis, token) {
 */
 async function inviteGitHubCollaborators(org, repo, collaborators, token) {
     // Get org repo url
-    const filePath = 'node_modules/jwz/github/api.properties';
+    const filePath = path.join(__dirname, 'node_modules', 'jwz', 'github', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
