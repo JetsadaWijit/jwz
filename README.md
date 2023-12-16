@@ -1,6 +1,7 @@
 # `Function`
 ## `GitHub`
 - [buildGitHubRepo](#buildGitHubRepo)
+- [deleteGitHubRepo](#deletegithubrepo)
 - [inviteGitHubCollaborators](#invitegithubcollaborators)
 #### `buildGitHubRepo`
 - `usage`
@@ -44,3 +45,22 @@
     ```
 - `note`
     - when code is running it will have output of result
+### `deleteGitHubRepo`
+- `usage`
+    ```
+    import { deleteGitHubRepo } from "jwz";
+
+    /*
+        @param org = String
+        @param repo = array
+        @param token = String
+    */
+
+    const org = 'your-org-name';
+    var repos = ['your-repoA', 'your-repoB'];
+    const token = 'your-token';
+
+    deleteGitHubRepo(org, repos, token)
+    ```
+- `note`
+    - It didn't return any (will add in future)
