@@ -62,5 +62,3 @@
 
     deleteGitHubRepo(org, repos, token)
     ```
-- `note`
-    - It didn't return any (will add in future)
