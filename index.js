@@ -111,27 +111,33 @@ async function buildGitHubRepos(org, repos, vis, token) {
     @param collaborators = array
     @param token = String
 */
-async function inviteGitHubCollaborators(org, repo, collaborators, token) {
+async function inviteGitHubReposCollaborators(org, repos, collaborators, token) {
     // Get org repo url
     const filePath = path.join(__dirname, 'github/api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
-        // Invite collaborators
-        await Promise.all(collaborators.map(async collaborator => {
-            const replacements = {
-                organization: org,
-                repository: repo,
-                collaborator: collaborator
-            };
+        // Invite collaborators for each repository
+        await Promise.all(repos.map(async repo => {
+            await Promise.all(collaborators.map(async collaborator => {
+                const replacements = {
+                    organization: org,
+                    repository: repo,
+                    collaborator: collaborator
+                };
 
-            await axios.put(replacePlaceholders(config.repourlcollaborator, replacements), {}, {
-                headers: {
-                Authorization: `Bearer ${token}`,
-                Accept: 'application/vnd.github.v3+json',
-                },
-            });
-            console.log(`Invitation sent to ${collaborator}`);
+                try {
+                    await axios.put(replacePlaceholders(config.repourlcollaborator, replacements), {}, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Accept: 'application/vnd.github.v3+json',
+                        },
+                    });
+                    console.log(`Invitation sent to ${collaborator} for ${repo}`);
+                } catch (error) {
+                    console.error(`Error inviting ${collaborator} for ${repo}:`, error.response ? error.response.data : error.message);
+                }
+            }));
         }));
 
         console.log('Collaborators invited successfully.');
@@ -173,5 +179,5 @@ async function deleteGitHubRepos(org, repos, token) {
 module.exports ={ 
     buildGitHubRepos,
     deleteGitHubRepos,
-    inviteGitHubCollaborators
+    inviteGitHubReposCollaborators
 };

@@ -27,32 +27,32 @@
 ### `inviteGitHubCollaborators`
 - `usage`
     ```
-    import { inviteGitHubCollaborators } from "jwz";
+    import { inviteGitHubReposCollaborators } from "jwz";
 
     /*
         @param org = String
-        @param repo = String
-        @param collaborators = array
+        @param repos = Array
+        @param collaborators = Array
         @param token = String
     */
 
     const org = 'your-org-name';
-    var repo = 'your-repo-name';
+    var repo = ['your-repoA', 'your-repoB'];
     var collaborators = ['collaboratorA', 'collaboratorB']
     const token = 'your-token';
 
-    inviteGitHubCollaborators(org, repo, collaborators, token);
+    inviteGitHubReposCollaborators(org, repos, collaborators, token);
     ```
 - `note`
     - when code is running it will have output of result
 ### `deleteGitHubRepos`
 - `usage`
     ```
-    import { deleteGitHubRepo } from "jwz";
+    import { deleteGitHubRepos } from "jwz";
 
     /*
         @param org = String
-        @param repo = array
+        @param repo = Array
         @param token = String
     */
 
@@ -60,5 +60,5 @@
     var repos = ['your-repoA', 'your-repoB'];
     const token = 'your-token';
 
-    deleteGitHubRepo(org, repos, token)
+    deleteGitHubRepos(org, repos, token)
     ```
