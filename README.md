@@ -2,7 +2,7 @@
 ## `GitHub`
 - [buildGitHubRepos](#buildGitHubRepos)
 - [deleteGitHubRepos](#deletegithubrepos)
-- [inviteGitHubCollaborators](#invitegithubcollaborators)
+- [inviteGitHubReposCollaborators](#invitegithubreposcollaborators)
 #### `buildGitHubRepos`
 - `usage`
     ```
@@ -24,7 +24,7 @@
 
     console.log(res);
     ```
-### `inviteGitHubCollaborators`
+### `inviteGitHubReposCollaborators`
 - `usage`
     ```
     import { inviteGitHubReposCollaborators } from "jwz";
