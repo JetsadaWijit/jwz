@@ -3,6 +3,7 @@
 - [buildGitHubRepos](#buildGitHubRepos)
 - [deleteGitHubRepos](#deletegithubrepos)
 - [inviteGitHubReposCollaborators](#invitegithubreposcollaborators)
+- [removeGitHubReposCollaborators](#removegithubreposcollaborators)
 #### `buildGitHubRepos`
 - `usage`
     ```
@@ -23,6 +24,23 @@
     const res = await buildGitHubRepos(org, repos, vis, token);
 
     console.log(res);
+    ```
+### `deleteGitHubRepos`
+- `usage`
+    ```
+    import { deleteGitHubRepos } from "jwz";
+
+    /*
+        @param org = String
+        @param repo = Array
+        @param token = String
+    */
+
+    const org = 'your-org-name';
+    var repos = ['your-repoA', 'your-repoB'];
+    const token = 'your-token';
+
+    deleteGitHubRepos(org, repos, token)
     ```
 ### `inviteGitHubReposCollaborators`
 - `usage`
@@ -45,20 +63,22 @@
     ```
 - `note`
     - when code is running it will have output of result
-### `deleteGitHubRepos`
+### `removeGitHubReposCollaborators`
 - `usage`
     ```
-    import { deleteGitHubRepos } from "jwz";
+    import { removeGitHubReposCollaborators } from "jwz";
 
     /*
         @param org = String
-        @param repo = Array
+        @param repos = Array
+        @param collaborators = Array
         @param token = String
     */
 
     const org = 'your-org-name';
-    var repos = ['your-repoA', 'your-repoB'];
+    var repo = ['your-repoA', 'your-repoB'];
+    var collaborators = ['collaboratorA', 'collaboratorB']
     const token = 'your-token';
 
-    deleteGitHubRepos(org, repos, token)
+    removeGitHubReposCollaborators(org, repos, collaborators, token);
     ```
