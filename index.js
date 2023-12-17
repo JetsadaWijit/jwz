@@ -102,13 +102,43 @@ async function buildGitHubRepos(org, repos, vis, token) {
   return results;
 }
 
+///////////////////////
+// deleteGitHubRepo //
+/////////////////////
+async function deleteGitHubRepos(org, repos, token) {
+  try {
+      // Get org repo URL
+      const filePath = path.join(__dirname, 'github/api.properties');
+      const config = readPropertiesFile(filePath);
+
+      const deleteRequests = repos.map(async repo => {
+          const replacements = {
+              organization: org,
+              repository: repo
+          };
+          return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+              },
+          });
+      });
+
+      return await Promise.all(deleteRequests);
+  } catch (error) {
+      // Handle error if needed
+      console.error('Error deleting GitHub repos:', error);
+      throw error; // Re-throw the error if needed
+  }
+}
+
 /////////////////////////////////////
 // inviteGitHubReposCollaborators //
 ///////////////////////////////////
 /*
     @param org = String
     @param repos = Array
-    @param collaborators = array
+    @param collaborators = Array
     @param token = String
 */
 async function inviteGitHubReposCollaborators(org, repos, collaborators, token) {
@@ -146,43 +176,13 @@ async function inviteGitHubReposCollaborators(org, repos, collaborators, token) 
     }
 }
 
-///////////////////////
-// deleteGitHubRepo //
-/////////////////////
-async function deleteGitHubRepos(org, repos, token) {
-    try {
-        // Get org repo URL
-        const filePath = path.join(__dirname, 'github/api.properties');
-        const config = readPropertiesFile(filePath);
-
-        const deleteRequests = repos.map(async repo => {
-            const replacements = {
-                organization: org,
-                repository: repo
-            };
-            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-        });
-
-        return await Promise.all(deleteRequests);
-    } catch (error) {
-        // Handle error if needed
-        console.error('Error deleting GitHub repos:', error);
-        throw error; // Re-throw the error if needed
-    }
-}
-
-////////////////////////////////
+/////////////////////////////////////
 // removeGitHubReposCollaborators //
-//////////////////////////////
+///////////////////////////////////
 /*
     @param org = String
     @param repos = Array
-    @param collaborators = array
+    @param collaborators = Array
     @param token = String
 */
 async function removeGitHubReposCollaborators(org, repos, collaborators, token) {
