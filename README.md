@@ -94,8 +94,6 @@
         @param version = String
     */
 
-    const getGitHubReleaseVersion = require('jwz');
-
     const org = 'org-name';
     const repo = 'repo-name';
     const version = 'version'
