@@ -4,7 +4,7 @@ const path = require('path');
 const {
     readPropertiesFile,
     replacePlaceholders
-} = require('../../index');
+} = require('../../essential');
 
 async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     // Get org repo url
