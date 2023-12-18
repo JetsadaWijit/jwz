@@ -86,6 +86,8 @@
 ### `getGitHubReleaseVersion`
 - `usage`
     ```
+    const getGitHubReleaseVersion = require('jwz');
+
     /* 
         @param org = String
         @param repo = String
