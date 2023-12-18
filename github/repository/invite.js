@@ -6,6 +6,13 @@ const {
     replacePlaceholders
 } = require('../../essential');
 
+/*
+    @param org = String
+    @param repos = Array
+    @param collaborators = Array
+    @param token = String
+*/
+
 async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     // Get org repo url
     const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
