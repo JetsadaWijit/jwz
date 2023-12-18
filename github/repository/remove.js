@@ -12,6 +12,7 @@ const {
     @param collaborators = Array
     @param token = String
 */
+
 async function removeReposCollaborators(org, repos, collaborators, token) {
     // Get org repo url
     const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
