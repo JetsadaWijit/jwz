@@ -4,7 +4,7 @@
   "description": "Utils",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JetsadaWijit/jwz.git"
+    "url": "https://github.com/JetsadaWijit/npmjs.git"
   },
   "main": "index.js",
   "scripts": {
