@@ -1,5 +1,5 @@
-import { readPropertiesFile } from "../../index"
-import { replacePlaceholders } from "../../index"
+const readPropertiesFile = require("../../index");
+const replacePlaceholders = require("../../index");
 
 async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     // Get org repo url
