@@ -4,6 +4,7 @@
 - [deleteGitHubRepos](#deletegithubrepos)
 - [inviteGitHubReposCollaborators](#invitegithubreposcollaborators)
 - [removeGitHubReposCollaborators](#removegithubreposcollaborators)
+- [getGitHubReleaseVersion](#getgithubreleaseversion)
 #### `buildGitHubRepos`
 - `usage`
     ```
@@ -82,3 +83,22 @@
 
     removeGitHubReposCollaborators(org, repos, collaborators, token);
     ```
+### `getGitHubReleaseVersion`
+- `usage`
+    ```
+    /* 
+        @param org = String
+        @param repo = String
+        @param version = String
+    */
+
+    const getGitHubReleaseVersion = require('jwz');
+
+    const org = 'org-name';
+    const repo = 'repo-name';
+    const version = 'version'
+
+    getGitHubReleaseVersion(org, repo, version);
+    ```
+- `note`
+    - This is for public organization repository
