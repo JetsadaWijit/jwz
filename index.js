@@ -104,51 +104,8 @@ async function deleteGitHubRepos(org, repos, token) {
   }
 }
 
-/////////////////////////////////////
-// removeGitHubReposCollaborators //
-///////////////////////////////////
-/*
-    @param org = String
-    @param repos = Array
-    @param collaborators = Array
-    @param token = String
-*/
-async function removeGitHubReposCollaborators(org, repos, collaborators, token) {
-  // Get org repo url
-  const filePath = path.join(__dirname, 'github/api.properties');
-  const config = readPropertiesFile(filePath);
-
-  try {
-      // Remove collaborators for each repository
-      await Promise.all(repos.map(async repo => {
-          await Promise.all(collaborators.map(async collaborator => {
-              const replacements = {
-                  organization: org,
-                  repository: repo,
-                  collaborator: collaborator
-              };
-
-              try {
-                  await axios.delete(replacePlaceholders(config.repourlcollaborator, replacements), {
-                      headers: {
-                          Authorization: `Bearer ${token}`,
-                          Accept: 'application/vnd.github.v3+json',
-                      },
-                  });
-                  console.log(`Collaborator ${collaborator} removed from ${repo}`);
-              } catch (error) {
-                  console.error(`Error removing ${collaborator} from ${repo}:`, error.response ? error.response.data : error.message);
-              }
-          }));
-      }));
-
-      console.log('Collaborators removed successfully.');
-  } catch (error) {
-      console.error('Error removing collaborators:', error.response ? error.response.data : error.message);
-  }
-}
-
 const inviteGitHubReposCollaborators = require('./github/repository/invite')
+const removeGitHubReposCollaborators = require('./github/repository/remove')
 
 module.exports ={
     // GitHub
