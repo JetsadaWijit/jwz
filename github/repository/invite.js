@@ -29,7 +29,7 @@ async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
                 };
 
                 try {
-                    await axios.put(replacePlaceholders(config.repourlcollaborator, replacements), {}, {
+                    await axios.put(replacePlaceholders(config.repocollaboratorurl, replacements), {}, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             Accept: 'application/vnd.github.v3+json',

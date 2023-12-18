@@ -29,7 +29,7 @@ async function removeReposCollaborators(org, repos, collaborators, token) {
                 };
 
                 try {
-                    await axios.delete(replacePlaceholders(config.repourlcollaborator, replacements), {
+                    await axios.delete(replacePlaceholders(config.repocollaboratorurl, replacements), {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             Accept: 'application/vnd.github.v3+json',
