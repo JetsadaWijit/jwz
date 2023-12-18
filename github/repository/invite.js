@@ -1,7 +1,10 @@
-const path = require('path')
+const axios = require('axios')
+const path = require('path');
 
-const readPropertiesFile = require("../../index");
-const replacePlaceholders = require("../../index");
+const {
+    readPropertiesFile,
+    replacePlaceholders
+} = require('../../essential');
 
 async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     // Get org repo url
