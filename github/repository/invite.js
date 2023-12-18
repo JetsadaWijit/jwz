@@ -36,6 +36,4 @@ async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     }
 }
 
-module.export = {
-    inviteCollaboratorsToRepos
-}
+module.exports = inviteCollaboratorsToRepos;
