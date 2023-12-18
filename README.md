@@ -7,7 +7,7 @@
 #### `buildGitHubRepos`
 - `usage`
     ```
-    import { buildGitHubRepos } from 'jwz';
+    const buildGitHubRepos = require('jwz');
 
     /*
         @param org = String
@@ -28,7 +28,7 @@
 ### `deleteGitHubRepos`
 - `usage`
     ```
-    import { deleteGitHubRepos } from "jwz";
+    const deleteGitHubRepos = require('jwz');
 
     /*
         @param org = String
@@ -45,7 +45,7 @@
 ### `inviteGitHubReposCollaborators`
 - `usage`
     ```
-    import { inviteGitHubReposCollaborators } from "jwz";
+    const inviteGitHubReposCollaborators = require('jwz');
 
     /*
         @param org = String
@@ -66,7 +66,7 @@
 ### `removeGitHubReposCollaborators`
 - `usage`
     ```
-    import { removeGitHubReposCollaborators } from "jwz";
+    const removeGitHubReposCollaborators = require('jwz');
 
     /*
         @param org = String
