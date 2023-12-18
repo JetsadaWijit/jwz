@@ -223,6 +223,10 @@ async function removeGitHubReposCollaborators(org, repos, collaborators, token) 
 const inviteGitHubReposCollaborators = require('./github/repository/invite')
 
 module.exports ={ 
+    // Essential
+    readPropertiesFile,
+    replacePlaceholders,
+    // GitHub
     buildGitHubRepos,
     deleteGitHubRepos,
     inviteGitHubReposCollaborators,
