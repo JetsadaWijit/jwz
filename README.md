@@ -32,7 +32,7 @@
 
     /*
         @param org = String
-        @param repo = Array
+        @param repos = Array
         @param token = String
     */
 
