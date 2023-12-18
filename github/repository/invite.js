@@ -1,9 +1,11 @@
+const path = require('path')
+
 const readPropertiesFile = require("../../index");
 const replacePlaceholders = require("../../index");
 
 async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     // Get org repo url
-    const filePath = path.join(__dirname, '..', 'properties/api.properties');
+    const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
