@@ -141,7 +141,7 @@ async function deleteGitHubRepos(org, repos, token) {
     @param collaborators = Array
     @param token = String
 */
-async function inviteGitHubReposCollaborators(org, repos, collaborators, token) {
+/* async function inviteGitHubReposCollaborators(org, repos, collaborators, token) {
     // Get org repo url
     const filePath = path.join(__dirname, 'github/api.properties');
     const config = readPropertiesFile(filePath);
@@ -174,7 +174,7 @@ async function inviteGitHubReposCollaborators(org, repos, collaborators, token) 
     } catch (error) {
         console.error('Error inviting collaborators:', error.response ? error.response.data : error.message);
     }
-}
+} */
 
 /////////////////////////////////////
 // removeGitHubReposCollaborators //
@@ -219,6 +219,8 @@ async function removeGitHubReposCollaborators(org, repos, collaborators, token) 
       console.error('Error removing collaborators:', error.response ? error.response.data : error.message);
   }
 }
+
+const inviteGitHubReposCollaborators = require('./github/repository/invite')
 
 module.exports ={ 
     buildGitHubRepos,
