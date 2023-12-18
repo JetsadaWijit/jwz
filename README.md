@@ -7,15 +7,13 @@
 - [getGitHubReleaseVersion](#getgithubreleaseversion)
 #### `buildGitHubRepos`
 - `usage`
-    ```
-    const buildGitHubRepos = require('jwz');
-
-    /*
+    ```/*
         @param org = String
         @param repo = String
         @param vis = String
         @param token = String
     */
+    const buildGitHubRepos = require('jwz');
 
     const org = 'your-org-name';
     var repos = ['your-repoA', 'your-repoB'];
@@ -28,14 +26,12 @@
     ```
 ### `deleteGitHubRepos`
 - `usage`
-    ```
-    const deleteGitHubRepos = require('jwz');
-
-    /*
+    ```/*
         @param org = String
         @param repos = Array
         @param token = String
     */
+    const deleteGitHubRepos = require('jwz');
 
     const org = 'your-org-name';
     var repos = ['your-repoA', 'your-repoB'];
@@ -45,15 +41,13 @@
     ```
 ### `inviteGitHubReposCollaborators`
 - `usage`
-    ```
-    const inviteGitHubReposCollaborators = require('jwz');
-
-    /*
+    ```/*
         @param org = String
         @param repos = Array
         @param collaborators = Array
         @param token = String
     */
+    const inviteGitHubReposCollaborators = require('jwz');
 
     const org = 'your-org-name';
     var repo = ['your-repoA', 'your-repoB'];
@@ -66,15 +60,13 @@
     - when code is running it will have output of result
 ### `removeGitHubReposCollaborators`
 - `usage`
-    ```
-    const removeGitHubReposCollaborators = require('jwz');
-
-    /*
+    ```/*
         @param org = String
         @param repos = Array
         @param collaborators = Array
         @param token = String
     */
+    const removeGitHubReposCollaborators = require('jwz');
 
     const org = 'your-org-name';
     var repo = ['your-repoA', 'your-repoB'];
@@ -86,13 +78,12 @@
 ### `getGitHubReleaseVersion`
 - `usage`
     ```
-    const getGitHubReleaseVersion = require('jwz');
-
     /* 
         @param org = String
         @param repo = String
         @param version = String
     */
+    const getGitHubReleaseVersion = require('jwz');
 
     const org = 'org-name';
     const repo = 'repo-name';
