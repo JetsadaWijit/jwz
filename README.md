@@ -91,9 +91,9 @@
 
     const release = await getGitHubReleaseVersion(org, repo, version);
 
-    console.log(`Release Name: ${releaseInfo.releaseName}`);
-    console.log(`Release Tag: ${releaseInfo.releaseTag}`);
-    console.log(`Release URL: ${releaseInfo.releaseURL}`);
+    console.log(`Release Name: ${release.releaseName}`);
+    console.log(`Release Tag: ${release.releaseTag}`);
+    console.log(`Release URL: ${release.releaseURL}`);
     ```
 - `note`
     - return `releaseName` `releaseTag` `releaseURL`
