@@ -89,7 +89,12 @@
     const repo = 'repo-name';
     const version = 'version'
 
-    getGitHubReleaseVersion(org, repo, version);
+    const release = getGitHubReleaseVersion(org, repo, version);
+
+    console.log(`Release Name: ${releaseInfo.releaseName}`);
+    console.log(`Release Tag: ${releaseInfo.releaseTag}`);
+    console.log(`Release URL: ${releaseInfo.releaseURL}`);
     ```
 - `note`
+    - return `releaseName` `releaseTag` `releaseURL`
     - This is for public organization repository

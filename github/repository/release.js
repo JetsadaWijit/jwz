@@ -31,10 +31,12 @@ async function getReleaseVersion(org, repo, version) {
         const release = response.data.find((release) => release.tag_name === version);
     
         if (release) {
-          // Output information about the release
-          console.log(`Release Name: ${release.name}`);
-          console.log(`Release Tag: ${release.tag_name}`);
-          console.log(`Release URL: ${release.html_url}`);
+            // Return information about the release
+            return {
+                releaseName: release.name,
+                releaseTag: release.tag_name,
+                releaseURL: release.html_url
+            };
         } else {
           console.log(`Release ${version} not found.`);
         }
