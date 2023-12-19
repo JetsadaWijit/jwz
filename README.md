@@ -89,7 +89,7 @@
     const repo = 'repo-name';
     const version = 'version'
 
-    const release = getGitHubReleaseVersion(org, repo, version);
+    const release = await getGitHubReleaseVersion(org, repo, version);
 
     console.log(`Release Name: ${releaseInfo.releaseName}`);
     console.log(`Release Tag: ${releaseInfo.releaseTag}`);
