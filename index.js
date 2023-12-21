@@ -1,19 +1,12 @@
-////////////
-// GitHub//
-//////////
-const buildGitHubRepos = require('./github/repository/build')
-const inviteGitHubReposCollaborators = require('./github/repository/invite')
-const removeGitHubReposCollaborators = require('./github/repository/remove')
-const deleteGitHubRepos = require('./github/repository/delete')
-const getGitHubReleaseVersion = require('./github/repository/release')
+const githubRpositoryPath = './github/repository';
 
-module.exports ={
-    /////////////
-    // GitHub //
-    ///////////
-    buildGitHubRepos,
-    deleteGitHubRepos,
-    inviteGitHubReposCollaborators,
-    removeGitHubReposCollaborators,
-    getGitHubReleaseVersion
+module.exports = {
+  /////////////
+  // GitHub //
+  ///////////
+  buildGitHubRepos: require(`${githubRpositoryPath}/build`),
+  inviteGitHubReposCollaborators: require(`${githubRpositoryPath}/invite`),
+  removeGitHubReposCollaborators: require(`${githubRpositoryPath}/remove`),
+  deleteGitHubRepos: require(`${githubRpositoryPath}/delete`),
+  getGitHubReleaseVersion: require(`${githubRpositoryPath}/release`)
 };
