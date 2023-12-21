@@ -7,7 +7,8 @@
 - [getGitHubReleaseVersion](#getgithubreleaseversion)
 #### `buildGitHubRepos`
 - `usage`
-    ```/*
+    ```
+    /*
         @param org = String
         @param repo = String
         @param vis = String
@@ -26,7 +27,8 @@
     ```
 ### `deleteGitHubRepos`
 - `usage`
-    ```/*
+    ```
+    /*
         @param org = String
         @param repos = Array
         @param token = String
@@ -41,7 +43,8 @@
     ```
 ### `inviteGitHubReposCollaborators`
 - `usage`
-    ```/*
+    ```
+    /*
         @param org = String
         @param repos = Array
         @param collaborators = Array
@@ -60,7 +63,8 @@
     - when code is running it will have output of result
 ### `removeGitHubReposCollaborators`
 - `usage`
-    ```/*
+    ```
+    /*
         @param org = String
         @param repos = Array
         @param collaborators = Array
