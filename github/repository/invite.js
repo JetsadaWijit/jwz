@@ -13,19 +13,18 @@ const {
     @param token = String
 */
 
-async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
+async function inviteCollaboratorsToRepos(org, repos, arrays, token) {
     // Get org repo url
     const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
-        // Invite collaborators for each repository
-        await Promise.all(repos.map(async repo => {
-            await Promise.all(collaborators.map(async collaborator => {
+        await Promise.all(repos.map(async (repo, i) => {
+            for (let j = 0; j < arrays[i].length; j++) {
                 const replacements = {
                     organization: org,
                     repository: repo,
-                    collaborator: collaborator
+                    collaborator: arrays[i][j]
                 };
 
                 try {
@@ -35,14 +34,12 @@ async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
                             Accept: 'application/vnd.github.v3+json',
                         },
                     });
-                    console.log(`Invitation sent to ${collaborator} for ${repo}`);
+                    console.log(`Invitation sent to ${arrays[i][j]} for ${repo}`);
                 } catch (error) {
-                    console.error(`Error inviting ${collaborator} for ${repo}:`, error.response ? error.response.data : error.message);
+                    console.error(`Error inviting ${arrays[i][j]} for ${repo}:`, error.response ? error.response.data : error.message);
                 }
-            }));
+            }
         }));
-
-        console.log('Collaborators invited successfully.');
     } catch (error) {
         console.error('Error inviting collaborators:', error.response ? error.response.data : error.message);
     }
