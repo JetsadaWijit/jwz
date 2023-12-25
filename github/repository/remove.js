@@ -9,7 +9,7 @@ const {
 /*
     @param org = String
     @param repos = Array
-    @param collaborators = Array
+    @param arrays = Array of Array
     @param token = String
 */
 
