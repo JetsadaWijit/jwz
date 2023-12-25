@@ -9,7 +9,7 @@ const {
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Array of Array
+    @param arrays = Two dimension array
     @param token = String
 */
 

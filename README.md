@@ -54,7 +54,7 @@ deleteGitHubRepos(org, repos, token)
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Array of Array
+    @param arrays = Two dimension array
     @param token = String
 */
 const inviteGitHubReposCollaborators = require('jwz');
@@ -74,7 +74,7 @@ inviteGitHubReposCollaborators(org, repos, arrays, token);
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Array of Array
+    @param arrays = Two dimension array
     @param token = String
 */
 const removeGitHubReposCollaborators = require('jwz');
