@@ -13,19 +13,18 @@ const {
     @param token = String
 */
 
-async function removeReposCollaborators(org, repos, collaborators, token) {
-    // Get org repo url
+async function removeCollaboratorsFromRepos(org, repos, arrays, token) {
+    // Get org repo URL
     const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
-        // Remove collaborators for each repository
-        await Promise.all(repos.map(async repo => {
-            await Promise.all(collaborators.map(async collaborator => {
+        await Promise.all(repos.map(async (repo, i) => {
+            for (let j = 0; j < arrays[i].length; j++) {
                 const replacements = {
                     organization: org,
                     repository: repo,
-                    collaborator: collaborator
+                    collaborator: arrays[i][j]
                 };
 
                 try {
@@ -35,14 +34,12 @@ async function removeReposCollaborators(org, repos, collaborators, token) {
                             Accept: 'application/vnd.github.v3+json',
                         },
                     });
-                    console.log(`Collaborator ${collaborator} removed from ${repo}`);
+                    console.log(`Collaborator ${arrays[i][j]} removed from ${repo}`);
                 } catch (error) {
-                    console.error(`Error removing ${collaborator} from ${repo}:`, error.response ? error.response.data : error.message);
+                    console.error(`Error removing ${arrays[i][j]} from ${repo}:`, error.response ? error.response.data : error.message);
                 }
-            }));
+            }
         }));
-
-        console.log('Collaborators removed successfully.');
     } catch (error) {
         console.error('Error removing collaborators:', error.response ? error.response.data : error.message);
     }
