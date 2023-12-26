@@ -60,7 +60,7 @@ deleteRepos(org, repos, token)
 const inviteCollaboratorsToRepos = require('jwz/github/invite');
 
 const org = 'your-org-name';
-var repo = ['your-repoA', 'your-repoB'];
+var repos = ['your-repoA', 'your-repoB'];
 var arrays = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
 const token = 'your-token';
 
@@ -80,7 +80,7 @@ inviteCollaboratorsToRepos(org, repos, arrays, token);
 const removeCollaboratorsFromRepos = require('jwz/github/remove');
 
 const org = 'your-org-name';
-var repo = ['your-repoA', 'your-repoB'];
+var repos = ['your-repoA', 'your-repoB'];
 var arrays = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
 const token = 'your-token';
 
