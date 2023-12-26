@@ -4,7 +4,7 @@ const path = require('path');
 const {
     readPropertiesFile,
     replacePlaceholders
-} = require('../../essential');
+} = require('../essential');
 
 /*
     @param org = String
@@ -13,8 +13,8 @@ const {
     @param token = String
 */
 
-async function inviteCollaboratorsToRepos(org, repos, arrays, token) {
-    // Get org repo url
+async function removeReposCollaborators(org, repos, arrays, token) {
+    // Get org repo URL
     const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
@@ -28,21 +28,21 @@ async function inviteCollaboratorsToRepos(org, repos, arrays, token) {
                 };
 
                 try {
-                    await axios.put(replacePlaceholders(config.repocollaboratorurl, replacements), {
+                    await axios.delete(replacePlaceholders(config.repocollaboratorurl, replacements), {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             Accept: 'application/vnd.github.v3+json',
                         },
                     });
-                    console.log(`Invitation sent to ${arrays[i][j]} for ${repo}`);
+                    console.log(`Collaborator ${arrays[i][j]} removed from ${repo}`);
                 } catch (error) {
-                    console.error(`Error inviting ${arrays[i][j]} for ${repo}:`, error.response ? error.response.data : error.message);
+                    console.error(`Error removing ${arrays[i][j]} from ${repo}:`, error.response ? error.response.data : error.message);
                 }
             }
         }));
     } catch (error) {
-        console.error('Error inviting collaborators:', error.response ? error.response.data : error.message);
+        console.error('Error removing collaborators:', error.response ? error.response.data : error.message);
     }
 }
 
-module.exports = inviteCollaboratorsToRepos;
+module.exports = removeReposCollaborators;

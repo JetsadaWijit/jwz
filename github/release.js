@@ -4,7 +4,7 @@ const path = require('path');
 const {
     readPropertiesFile,
     replacePlaceholders
-} = require('../../essential');
+} = require('../essential');
 
 /* 
     @param org = String
