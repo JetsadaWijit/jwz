@@ -7,12 +7,12 @@
 
 # `Function`
 ## `GitHub`
-- [buildGitHubRepos](#buildGitHubRepos)
-- [deleteGitHubRepos](#deletegithubrepos)
-- [inviteGitHubReposCollaborators](#invitegithubreposcollaborators)
-- [removeGitHubReposCollaborators](#removecollaboratorsfromrepos)
-- [getGitHubReleaseVersion](#getgithubreleaseversion)
-#### `buildGitHubRepos`
+- [buildRepos](#githubbuildrepos)
+- [deleteRepos](#githubdeleterepos)
+- [inviteCollaboratorsToRepos](#githubinvitecollaboratorstorepos)
+- [removeCollaboratorsFromRepos](#githubremovecollaboratorsfromrepos)
+- [getReleaseVersion](#githubgetreleaseversion)
+#### `GitHubbuildRepos`
 - `usage`
 ```
 /*
@@ -21,7 +21,7 @@
     @param vis = String
     @param token = String
 */
-const buildGitHubRepos = require('jwz/github');
+const buildRepos = require('jwz/github');
 
 const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
@@ -32,7 +32,7 @@ const res = await buildGitHubRepos(org, repos, vis, token);
 
 console.log(res);
 ```
-### `deleteGitHubRepos`
+### `GitHubdeleteRepos`
 - `usage`
 ```
 /*
@@ -40,7 +40,7 @@ console.log(res);
     @param repos = Array
     @param token = String
 */
-const deleteGitHubRepos = require('jwz/github');
+const deleteRepos = require('jwz/github');
 
 const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
@@ -48,7 +48,7 @@ const token = 'your-token';
 
 deleteGitHubRepos(org, repos, token)
 ```
-### `inviteGitHubReposCollaborators`
+### `GitHubinviteCollaboratorsToRepos`
 - `usage`
 ```
 /*
@@ -57,7 +57,7 @@ deleteGitHubRepos(org, repos, token)
     @param arrays = Two dimension array
     @param token = String
 */
-const inviteGitHubReposCollaborators = require('jwz/github');
+const inviteCollaboratorsToRepos = require('jwz/github');
 
 const org = 'your-org-name';
 var repo = ['your-repoA', 'your-repoB'];
@@ -68,7 +68,7 @@ inviteGitHubReposCollaborators(org, repos, arrays, token);
 ```
 - `note`
     - when code is running it will have output of result
-### `removeCollaboratorsFromRepos`
+### `GitHubremoveCollaboratorsFromRepos`
 - `usage`
 ```
 /*
@@ -86,7 +86,7 @@ const token = 'your-token';
 
 removeGitHubReposCollaborators(org, repos, arrays, token);
 ```
-### `getGitHubReleaseVersion`
+### `GitHubgetReleaseVersion`
 - `usage`
 ```
 /* 
@@ -94,7 +94,7 @@ removeGitHubReposCollaborators(org, repos, arrays, token);
     @param repo = String
     @param version = String
 */
-const getGitHubReleaseVersion = require('jwz/github');
+const getReleaseVersion = require('jwz/github');
 
 const org = 'org-name';
 const repo = 'repo-name';
