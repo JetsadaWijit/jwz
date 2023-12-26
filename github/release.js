@@ -15,7 +15,7 @@ const {
 // For public organization repository
 
 async function getReleaseVersion(org, repo, version) {
-    const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
+    const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     const replacements = {

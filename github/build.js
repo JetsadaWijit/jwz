@@ -13,7 +13,7 @@ const {
     @param token = String
 */
 async function buildGitHubRepos(org, repos, vis, token) {
-    const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
+    const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     // Request headers

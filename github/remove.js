@@ -15,7 +15,7 @@ const {
 
 async function removeReposCollaborators(org, repos, arrays, token) {
     // Get org repo URL
-    const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
+    const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {

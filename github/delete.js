@@ -15,7 +15,7 @@ const {
 async function deleteGitHubRepos(org, repos, token) {
     try {
         // Get org repo URL
-        const filePath = path.join(__dirname, '..', 'properties', 'api.properties');
+        const filePath = path.join(__dirname, 'properties', 'api.properties');
         const config = readPropertiesFile(filePath);
 
         const deleteRequests = repos.map(async repo => {
