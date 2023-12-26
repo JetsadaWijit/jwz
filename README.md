@@ -7,12 +7,12 @@
 
 # `Function`
 ## `GitHub`
-- [buildRepos](#githubbuildrepos)
-- [deleteRepos](#githubdeleterepos)
-- [inviteCollaboratorsToRepos](#githubinvitecollaboratorstorepos)
-- [removeCollaboratorsFromRepos](#githubremovecollaboratorsfromrepos)
-- [getReleaseVersion](#githubgetreleaseversion)
-#### `GitHubbuildRepos`
+- [buildRepos](#github-buildrepos)
+- [deleteRepos](#github-deleterepos)
+- [inviteCollaboratorsToRepos](#github-invitecollaboratorstorepos)
+- [removeCollaboratorsFromRepos](#github-removecollaboratorsfromrepos)
+- [getReleaseVersion](#github-getreleaseversion)
+#### `GitHub buildRepos`
 - `usage`
 ```
 /*
@@ -32,7 +32,7 @@ const res = await buildRepos(org, repos, vis, token);
 
 console.log(res);
 ```
-### `GitHubdeleteRepos`
+### `GitHub deleteRepos`
 - `usage`
 ```
 /*
@@ -48,7 +48,7 @@ const token = 'your-token';
 
 deleteRepos(org, repos, token)
 ```
-### `GitHubinviteCollaboratorsToRepos`
+### `GitHub inviteCollaboratorsToRepos`
 - `usage`
 ```
 /*
@@ -68,7 +68,7 @@ inviteCollaboratorsToRepos(org, repos, arrays, token);
 ```
 - `note`
     - when code is running it will have output of result
-### `GitHubremoveCollaboratorsFromRepos`
+### `GitHub removeCollaboratorsFromRepos`
 - `usage`
 ```
 /*
@@ -86,7 +86,7 @@ const token = 'your-token';
 
 removeCollaboratorsFromRepos(org, repos, arrays, token);
 ```
-### `GitHubgetReleaseVersion`
+### `GitHub getReleaseVersion`
 - `usage`
 ```
 /* 
