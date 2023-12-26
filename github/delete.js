@@ -12,7 +12,7 @@ const {
     @param token = String
 */
 
-async function deleteGitHubRepos(org, repos, token) {
+async function deleteRepos(org, repos, token) {
     try {
         // Get org repo URL
         const filePath = path.join(__dirname, 'properties', 'api.properties');
@@ -39,4 +39,4 @@ async function deleteGitHubRepos(org, repos, token) {
     }
 }
 
-module.exports = deleteGitHubRepos;
+module.exports = deleteRepos;

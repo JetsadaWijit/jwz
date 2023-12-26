@@ -12,7 +12,7 @@ const {
     @param vis = String
     @param token = String
 */
-async function buildGitHubRepos(org, repos, vis, token) {
+async function buildRepos(org, repos, vis, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
@@ -72,4 +72,4 @@ async function buildGitHubRepos(org, repos, vis, token) {
     return results;
 }
 
-module.exports = buildGitHubRepos;
+module.exports = buildRepos;
