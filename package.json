@@ -9,7 +9,11 @@
   "main": "index.js",
   "exports": {
     ".": "./index",
-    "./github": "./github"
+    "./github/build": "./github/build.js",
+    "./github/delete": "./github/delete.js",
+    "./github/invite": "./github/invite.js",
+    "./github/release": "./github/release.js",
+    "./github/remove": "./github/remove.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

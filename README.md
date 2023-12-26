@@ -21,7 +21,7 @@
     @param vis = String
     @param token = String
 */
-const buildRepos = require('jwz/github');
+const buildRepos = require('jwz/github/build');
 
 const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
@@ -40,7 +40,7 @@ console.log(res);
     @param repos = Array
     @param token = String
 */
-const deleteRepos = require('jwz/github');
+const deleteRepos = require('jwz/github/delete');
 
 const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
@@ -57,7 +57,7 @@ deleteRepos(org, repos, token)
     @param arrays = Two dimension array
     @param token = String
 */
-const inviteCollaboratorsToRepos = require('jwz/github');
+const inviteCollaboratorsToRepos = require('jwz/github/invite');
 
 const org = 'your-org-name';
 var repo = ['your-repoA', 'your-repoB'];
@@ -77,7 +77,7 @@ inviteCollaboratorsToRepos(org, repos, arrays, token);
     @param arrays = Two dimension array
     @param token = String
 */
-const removeCollaboratorsFromRepos = require('jwz/github');
+const removeCollaboratorsFromRepos = require('jwz/github/remove');
 
 const org = 'your-org-name';
 var repo = ['your-repoA', 'your-repoB'];
@@ -94,7 +94,7 @@ removeCollaboratorsFromRepos(org, repos, arrays, token);
     @param repo = String
     @param version = String
 */
-const getReleaseVersion = require('jwz/github');
+const getReleaseVersion = require('jwz/github/release');
 
 const org = 'org-name';
 const repo = 'repo-name';
