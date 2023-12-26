@@ -28,7 +28,7 @@ var repos = ['your-repoA', 'your-repoB'];
 var vis = 'public';
 const token = 'your-token';
 
-const res = await buildGitHubRepos(org, repos, vis, token);
+const res = await buildRepos(org, repos, vis, token);
 
 console.log(res);
 ```
@@ -46,7 +46,7 @@ const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
 const token = 'your-token';
 
-deleteGitHubRepos(org, repos, token)
+deleteRepos(org, repos, token)
 ```
 ### `GitHubinviteCollaboratorsToRepos`
 - `usage`
@@ -64,7 +64,7 @@ var repo = ['your-repoA', 'your-repoB'];
 var arrays = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
 const token = 'your-token';
 
-inviteGitHubReposCollaborators(org, repos, arrays, token);
+inviteCollaboratorsToRepos(org, repos, arrays, token);
 ```
 - `note`
     - when code is running it will have output of result
@@ -84,7 +84,7 @@ var repo = ['your-repoA', 'your-repoB'];
 var arrays = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
 const token = 'your-token';
 
-removeGitHubReposCollaborators(org, repos, arrays, token);
+removeCollaboratorsFromRepos(org, repos, arrays, token);
 ```
 ### `GitHubgetReleaseVersion`
 - `usage`
@@ -100,7 +100,7 @@ const org = 'org-name';
 const repo = 'repo-name';
 const version = 'version'
 
-const release = await getGitHubReleaseVersion(org, repo, version);
+const release = await getReleaseVersion(org, repo, version);
 
 console.log(`Release Name: ${release.releaseName}`);
 console.log(`Release Tag: ${release.releaseTag}`);
