@@ -7,6 +7,10 @@
     "url": "https://github.com/JetsadaWijit/npmjs.git"
   },
   "main": "index.js",
+  "exports": {
+    ".": "./index",
+    "./github": "./github"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
