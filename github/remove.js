@@ -13,7 +13,7 @@ const {
     @param token = String
 */
 
-async function removeReposCollaborators(org, repos, arrays, token) {
+async function removeCollaboratorsFromRepos(org, repos, arrays, token) {
     // Get org repo URL
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
@@ -45,4 +45,4 @@ async function removeReposCollaborators(org, repos, arrays, token) {
     }
 }
 
-module.exports = removeReposCollaborators;
+module.exports = removeCollaboratorsFromRepos;

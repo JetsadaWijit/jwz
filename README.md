@@ -10,7 +10,7 @@
 - [buildGitHubRepos](#buildGitHubRepos)
 - [deleteGitHubRepos](#deletegithubrepos)
 - [inviteGitHubReposCollaborators](#invitegithubreposcollaborators)
-- [removeGitHubReposCollaborators](#removegithubreposcollaborators)
+- [removeGitHubReposCollaborators](#removecollaboratorsfromrepos)
 - [getGitHubReleaseVersion](#getgithubreleaseversion)
 #### `buildGitHubRepos`
 - `usage`
@@ -68,7 +68,7 @@ inviteGitHubReposCollaborators(org, repos, arrays, token);
 ```
 - `note`
     - when code is running it will have output of result
-### `removeGitHubReposCollaborators`
+### `removeCollaboratorsFromRepos`
 - `usage`
 ```
 /*
@@ -77,7 +77,7 @@ inviteGitHubReposCollaborators(org, repos, arrays, token);
     @param arrays = Two dimension array
     @param token = String
 */
-const removeGitHubReposCollaborators = require('jwz');
+const removeCollaboratorsFromRepos = require('jwz');
 
 const org = 'your-org-name';
 var repo = ['your-repoA', 'your-repoB'];
