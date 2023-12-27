@@ -23,7 +23,7 @@ async function deleteRepos(org, repos, token) {
                 organization: org,
                 repository: repo
             };
-            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
+            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
