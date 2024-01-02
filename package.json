@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/JetsadaWijit/npmjs.git"
   },
+  "homepage": "https://jetsadawijit.github.io/website-npmjs",
   "main": "index.js",
   "exports": {
     ".": "./index",
