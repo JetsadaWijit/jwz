@@ -9,22 +9,22 @@ const {
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Two dimension array
+    @param collaborators = Two dimension array
     @param token = String
 */
 
-async function inviteCollaboratorsToRepos(org, repos, arrays, token) {
+async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
     // Get org repo url
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
         await Promise.all(repos.map(async (repo, i) => {
-            for (let j = 0; j < arrays[i].length; j++) {
+            for (let j = 0; j < collaborators[i].length; j++) {
                 const replacements = {
                     organization: org,
                     repository: repo,
-                    collaborator: arrays[i][j]
+                    collaborator: collaborators[i][j]
                 };
 
                 try {
@@ -34,9 +34,9 @@ async function inviteCollaboratorsToRepos(org, repos, arrays, token) {
                             Accept: 'application/vnd.github.v3+json',
                         },
                     });
-                    console.log(`Invitation sent to ${arrays[i][j]} for ${repo}`);
+                    console.log(`Invitation sent to ${collaborators[i][j]} for ${repo}`);
                 } catch (error) {
-                    console.error(`Error inviting ${arrays[i][j]} for ${repo}:`, error.response ? error.response.data : error.message);
+                    console.error(`Error inviting ${collaborators[i][j]} for ${repo}:`, error.response ? error.response.data : error.message);
                 }
             }
         }));

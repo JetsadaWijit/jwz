@@ -9,22 +9,22 @@ const {
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Two dimension array
+    @param collaborators = Two dimension array
     @param token = String
 */
 
-async function removeCollaboratorsFromRepos(org, repos, arrays, token) {
+async function removeCollaboratorsFromRepos(org, repos, collaborators, token) {
     // Get org repo URL
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
     try {
         await Promise.all(repos.map(async (repo, i) => {
-            for (let j = 0; j < arrays[i].length; j++) {
+            for (let j = 0; j < collaborators[i].length; j++) {
                 const replacements = {
                     organization: org,
                     repository: repo,
-                    collaborator: arrays[i][j]
+                    collaborator: collaborators[i][j]
                 };
 
                 try {
@@ -34,9 +34,9 @@ async function removeCollaboratorsFromRepos(org, repos, arrays, token) {
                             Accept: 'application/vnd.github.v3+json',
                         },
                     });
-                    console.log(`Collaborator ${arrays[i][j]} removed from ${repo}`);
+                    console.log(`Collaborator ${collaborators[i][j]} removed from ${repo}`);
                 } catch (error) {
-                    console.error(`Error removing ${arrays[i][j]} from ${repo}:`, error.response ? error.response.data : error.message);
+                    console.error(`Error removing ${collaborators[i][j]} from ${repo}:`, error.response ? error.response.data : error.message);
                 }
             }
         }));
