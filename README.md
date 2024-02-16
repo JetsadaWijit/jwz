@@ -17,7 +17,7 @@
 ```
 /*
     @param org = String
-    @param repo = String
+    @param repos = Array
     @param vis = String
     @param token = String
 */
@@ -54,17 +54,17 @@ deleteRepos(org, repos, token)
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Two dimension array
+    @param collaborators = Two dimension array
     @param token = String
 */
 const inviteCollaboratorsToRepos = require('jwz/github/invite');
 
 const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
-var arrays = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
+var collaborators = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
 const token = 'your-token';
 
-inviteCollaboratorsToRepos(org, repos, arrays, token);
+inviteCollaboratorsToRepos(org, repos, collaborators, token);
 ```
 - `note`
     - when code is running it will have output of result
@@ -74,17 +74,17 @@ inviteCollaboratorsToRepos(org, repos, arrays, token);
 /*
     @param org = String
     @param repos = Array
-    @param arrays = Two dimension array
+    @param collaborators = Two dimension array
     @param token = String
 */
 const removeCollaboratorsFromRepos = require('jwz/github/remove');
 
 const org = 'your-org-name';
 var repos = ['your-repoA', 'your-repoB'];
-var arrays = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
+var collaborators = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
 const token = 'your-token';
 
-removeCollaboratorsFromRepos(org, repos, arrays, token);
+removeCollaboratorsFromRepos(org, repos, collaborators, token);
 ```
 ### `GitHub getReleaseVersion`
 - `usage`
