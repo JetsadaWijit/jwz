@@ -8,7 +8,7 @@ const {
 
 /*
     @param org = String
-    @param repo = String
+    @param repos = Array
     @param vis = String
     @param token = String
 */
