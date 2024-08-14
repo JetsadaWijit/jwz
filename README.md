@@ -9,7 +9,7 @@
 
 </h3>
 
-![license](https://img.shields.io/badge/license-MIT-blue) ![version](https://img.shields.io/badge/version-1.7.0-blue)
+![license](https://img.shields.io/badge/license-MIT-blue) ![version](https://img.shields.io/badge/version-1.7.1-blue)
 
 # `Function`
 ## `GitHub`
