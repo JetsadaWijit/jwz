@@ -12,14 +12,19 @@
 ![license](https://img.shields.io/badge/license-MIT-blue) ![version](https://img.shields.io/badge/version-1.7.3-blue)
 
 # `Function`
+
 ## `GitHub`
+
 - [buildRepos](#github-buildrepos)
 - [deleteRepos](#github-deleterepos)
 - [inviteCollaboratorsToRepos](#github-invitecollaboratorstorepos)
 - [removeCollaboratorsFromRepos](#github-removecollaboratorsfromrepos)
 - [getReleaseVersion](#github-getreleaseversion)
+
 #### `GitHub buildRepos`
+
 - `usage`
+
 ```
 /*
     @param org = String
@@ -38,8 +43,11 @@ const res = await buildRepos(org, repos, vis, token);
 
 console.log(res);
 ```
+
 ### `GitHub deleteRepos`
+
 - `usage`
+
 ```
 /*
     @param org = String
@@ -54,8 +62,11 @@ const token = 'your-token';
 
 deleteRepos(org, repos, token)
 ```
+
 ### `GitHub inviteCollaboratorsToRepos`
+
 - `usage`
+
 ```
 /*
     @param org = String
@@ -72,10 +83,14 @@ const token = 'your-token';
 
 inviteCollaboratorsToRepos(org, repos, collaborators, token);
 ```
+
 - `note`
     - when code is running it will have output of result
+
 ### `GitHub removeCollaboratorsFromRepos`
+
 - `usage`
+
 ```
 /*
     @param org = String
@@ -92,8 +107,11 @@ const token = 'your-token';
 
 removeCollaboratorsFromRepos(org, repos, collaborators, token);
 ```
+
 ### `GitHub getReleaseVersion`
+
 - `usage`
+
 ```
 /* 
     @param org = String
@@ -112,6 +130,7 @@ console.log(`Release Name: ${release.releaseName}`);
 console.log(`Release Tag: ${release.releaseTag}`);
 console.log(`Release URL: ${release.releaseURL}`);
 ```
+
 - `note`
     - return `releaseName` `releaseTag` `releaseURL`
     - This is for public organization repository
