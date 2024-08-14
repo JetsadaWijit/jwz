@@ -13,6 +13,12 @@
 
 # `Function`
 
+## `Mailer`
+
+### `outlook`
+
+- [send](#mailer-outlook-send)
+
 ## `GitHub`
 
 - [buildRepos](#github-buildrepos)
@@ -20,6 +26,36 @@
 - [inviteCollaboratorsToRepos](#github-invitecollaboratorstorepos)
 - [removeCollaboratorsFromRepos](#github-removecollaboratorsfromrepos)
 - [getReleaseVersion](#github-getreleaseversion)
+
+### `mailer-outlook-send`
+
+- `usage`
+
+```
+/*
+    Sends an email using the jwz/mailer/outlook/send library.
+
+    @param {string} sender The email address of the sender.
+    @param {string} password The password for the sender's email account.
+    @param {string} receiver The email address of the recipient.
+    @param {string} subject The subject line of the email.
+    @param {string} text The body text of the email.
+*/
+const sendEmail = require('jwz/mailer/outlook/send');
+
+const sender = 'sender@outlook.com';
+const password = '1234'; // Please note: storing password in plain text is insecure.
+
+const receiver = 'receiver@outlook.com';
+
+const subject = 'Test';
+const text = 'This is a test email.'; // Added some content to the body
+
+sendEmail(sender, password, receiver, subject, text);
+```
+
+- note
+    - Using environment variables for passwords is more secure.
 
 #### `GitHub buildRepos`
 
