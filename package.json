@@ -14,7 +14,8 @@
     "./github/delete": "./github/delete.js",
     "./github/invite": "./github/invite.js",
     "./github/release": "./github/release.js",
-    "./github/remove": "./github/remove.js"
+    "./github/remove": "./github/remove.js",
+    "./mailer/outlook/send": "./mailer/outlook/send.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
