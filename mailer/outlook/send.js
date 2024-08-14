@@ -1,20 +1,26 @@
 const nodemailer = require('nodemailer');
 
 async function sendEmail(sender, password, receiver, subject, text) {
-    const transporter = nodemailer.createTransport({
-        service: 'Outlook365',
-        auth: {
-            user: sender,
-            pass: password,
-        },
-    });
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'Outlook365',
+            auth: {
+                user: sender,
+                pass: password,
+            },
+        });
 
-    return transporter.sendMail({
-        from: sender,
-        to: receiver,
-        subject: subject,
-        text: text,
-    });
+        const info = await transporter.sendMail({
+            from: sender,
+            to: receiver,
+            subject: subject,
+            text: text,
+        });
+
+        return info;
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = sendEmail;
