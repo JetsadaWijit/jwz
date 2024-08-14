@@ -30,6 +30,7 @@
   "author": "JetsadaWijit <ze_ro_owen@hotmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.2"
+    "axios": "^1.6.2",
+    "nodemailer": "^6.9.14"
   }
 }
