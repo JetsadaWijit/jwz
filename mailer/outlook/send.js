@@ -16,3 +16,5 @@ async function sendEmail(sender, password, receiver, subject, text) {
         text: text,
     });
 }
+
+module.exports = sendEmail;
