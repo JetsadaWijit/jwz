@@ -170,3 +170,8 @@ console.log(`Release URL: ${release.releaseURL}`);
 - `note`
     - return `releaseName` `releaseTag` `releaseURL`
     - This is for public organization repository
+# `Member`
+
+|Status|GitHub|GitLab|Email|
+|-|-|-|-|
+|owner|[JetsadaWijit](https://github.com/JetsadaWijit)|[JetsadaWijit](https://gitlab.com/JetsadaWijit)|jetsadawijit@outlook.com|
