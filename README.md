@@ -55,15 +55,14 @@ sendEmail(sender, password, receiver, subject, text);
     @param vis = String
     @param token = String
 */
-const buildRepos = require('jwz/github/build');
+const { buildRepos } = require('jwz/github');
 
 const org = 'your-org-name';
-var repos = ['your-repoA', 'your-repoB'];
-var vis = 'public';
+const repos = ['your-repoA', 'your-repoB'];
+const vis = 'public';
 const token = 'your-token';
 
 const res = await buildRepos(org, repos, vis, token);
-
 console.log(res);
 ```
 
@@ -77,13 +76,14 @@ console.log(res);
     @param repos = Array
     @param token = String
 */
-const deleteRepos = require('jwz/github/delete');
+const { deleteRepos } = require('jwz/github');
 
 const org = 'your-org-name';
-var repos = ['your-repoA', 'your-repoB'];
+const repos = ['your-repoA', 'your-repoB'];
 const token = 'your-token';
 
-deleteRepos(org, repos, token)
+const res = await deleteRepos(org, repos, token);
+console.log(res);
 ```
 
 ### `GitHub inviteCollaboratorsToRepos`
@@ -94,17 +94,18 @@ deleteRepos(org, repos, token)
 /*
     @param org = String
     @param repos = Array
-    @param collaborators = Two dimension array
+    @param collaborators = Array
     @param token = String
 */
-const inviteCollaboratorsToRepos = require('jwz/github/invite');
+const { inviteCollaboratorsToRepos } = require('jwz/github');
 
 const org = 'your-org-name';
-var repos = ['your-repoA', 'your-repoB'];
-var collaborators = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
+const repos = ['your-repoA', 'your-repoB'];
+const collaborators = ['collaboratorA', 'collaboratorB'];
 const token = 'your-token';
 
-inviteCollaboratorsToRepos(org, repos, collaborators, token);
+const res = await inviteCollaboratorsToRepos(org, repos, collaborators, token);
+console.log(res);
 ```
 
 - `note`
@@ -118,17 +119,18 @@ inviteCollaboratorsToRepos(org, repos, collaborators, token);
 /*
     @param org = String
     @param repos = Array
-    @param collaborators = Two dimension array
+    @param collaborators = Array
     @param token = String
 */
-const removeCollaboratorsFromRepos = require('jwz/github/remove');
+const { removeCollaboratorsFromRepos } = require('jwz/github');
 
 const org = 'your-org-name';
-var repos = ['your-repoA', 'your-repoB'];
-var collaborators = [['collaboratorA', 'collaboratorB'], ['collaboratorC', 'collaboratorD']]
+const repos = ['your-repoA', 'your-repoB'];
+const collaborators = ['collaboratorA', 'collaboratorB'];
 const token = 'your-token';
 
-removeCollaboratorsFromRepos(org, repos, collaborators, token);
+const res = await removeCollaboratorsFromRepos(org, repos, collaborators, token);
+console.log(res);
 ```
 
 ### `GitHub getReleaseVersion`
@@ -136,22 +138,19 @@ removeCollaboratorsFromRepos(org, repos, collaborators, token);
 - `usage`
 
 ```
-/* 
+/*
     @param org = String
     @param repo = String
-    @param version = String
+    @param token = String
 */
-const getReleaseVersion = require('jwz/github/release');
+const { getReleaseVersion } = require('jwz/github');
 
-const org = 'org-name';
-const repo = 'repo-name';
-const version = 'version'
+const org = 'your-org-name';
+const repo = 'your-repo-name';
+const token = 'your-token';
 
-const release = await getReleaseVersion(org, repo, version);
-
-console.log(`Release Name: ${release.releaseName}`);
-console.log(`Release Tag: ${release.releaseTag}`);
-console.log(`Release URL: ${release.releaseURL}`);
+const res = await getReleaseVersion(org, repo, token);
+console.log(res);
 ```
 
 - `note`
