@@ -2,11 +2,15 @@
   "name": "jwz",
   "version": "1.7.3",
   "description": "Utils",
+  "homepage": "https://jetsadawijit.github.io/website-npmjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/JetsadaWijit/npmjs.git"
   },
-  "homepage": "https://jetsadawijit.github.io/website-npmjs",
+  "bugs": {
+    "url": "https://github.com/JetsadaWijit/npmjs/issues",
+    "email": "jetsadawijit@outlook.com"
+  },
   "main": "index.js",
   "exports": {
     "./github": "./github/index.js",
