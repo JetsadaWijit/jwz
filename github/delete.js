@@ -1,29 +1,19 @@
-const axios = require('axios')
+const axios = require('axios');
 const path = require('path');
-
-const {
-    readPropertiesFile,
-    replacePlaceholders
-} = require('../essential');
-
-/*
-    @param org = String
-    @param repos = Array
-    @param token = String
-*/
+const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
 async function deleteRepos(org, repos, token) {
-    try {
-        // Get org repo URL
-        const filePath = path.join(__dirname, 'properties', 'api.properties');
-        const config = readPropertiesFile(filePath);
+    const filePath = path.join(__dirname, 'properties', 'api.properties');
+    const config = readPropertiesFile(filePath);
 
+    if (!config.repospecificurl) {
+        throw new Error("Repository-specific URL is missing in the configuration.");
+    }
+
+    try {
         const deleteRequests = repos.map(async repo => {
-            const replacements = {
-                organization: org,
-                repository: repo
-            };
-            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {}, {
+            const replacements = { organization: org, repository: repo };
+            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -33,9 +23,8 @@ async function deleteRepos(org, repos, token) {
 
         return await Promise.all(deleteRequests);
     } catch (error) {
-        // Handle error if needed
         console.error('Error deleting GitHub repos:', error);
-        throw error; // Re-throw the error if needed
+        throw error;
     }
 }
 

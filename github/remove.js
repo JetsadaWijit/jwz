@@ -1,48 +1,35 @@
-const axios = require('axios')
+const axios = require('axios');
 const path = require('path');
-
-const {
-    readPropertiesFile,
-    replacePlaceholders
-} = require('../essential');
-
-/*
-    @param org = String
-    @param repos = Array
-    @param collaborators = Two dimension array
-    @param token = String
-*/
+const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
 async function removeCollaboratorsFromRepos(org, repos, collaborators, token) {
-    // Get org repo URL
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
-    try {
-        await Promise.all(repos.map(async (repo, i) => {
-            for (let j = 0; j < collaborators[i].length; j++) {
-                const replacements = {
-                    organization: org,
-                    repository: repo,
-                    collaborator: collaborators[i][j]
-                };
-
-                try {
-                    await axios.delete(replacePlaceholders(config.repocollaboratorurl, replacements), {}, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            Accept: 'application/vnd.github.v3+json',
-                        },
-                    });
-                    console.log(`Collaborator ${collaborators[i][j]} removed from ${repo}`);
-                } catch (error) {
-                    console.error(`Error removing ${collaborators[i][j]} from ${repo}:`, error.response ? error.response.data : error.message);
-                }
-            }
-        }));
-    } catch (error) {
-        console.error('Error removing collaborators:', error.response ? error.response.data : error.message);
+    if (!config.repocollaboratorurl) {
+        throw new Error("Collaborator URL is missing in the configuration.");
     }
+
+    const results = await Promise.all(repos.map(async (repo, i) => {
+        const repoResults = [];
+        for (let j = 0; j < collaborators[i].length; j++) {
+            const replacements = { organization: org, repository: repo, collaborator: collaborators[i][j] };
+            try {
+                await axios.delete(replacePlaceholders(config.repocollaboratorurl, replacements), {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/vnd.github.v3+json',
+                    },
+                });
+                repoResults.push({ collaborator: collaborators[i][j], success: true });
+            } catch (error) {
+                repoResults.push({ collaborator: collaborators[i][j], success: false, error: error.message });
+            }
+        }
+        return { repo, results: repoResults };
+    }));
+
+    return results;
 }
 
 module.exports = removeCollaboratorsFromRepos;
