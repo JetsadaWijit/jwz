@@ -1,6 +1,5 @@
-const axios = require('axios')
+const axios = require('axios');
 const path = require('path');
-
 const {
     readPropertiesFile,
     replacePlaceholders
@@ -16,58 +15,38 @@ async function buildRepos(org, repos, vis, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
-    // Request headers
+    if (!config.repourl) {
+        throw new Error("Repository URL is missing in the configuration.");
+    }
+
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
     };
 
-    // Define a function to create a GitHub repository
-    const createGitHubRepo = async (repo) => {
-        const replacements = {
-        organization: org
-        };
-
-        // Request body
-        const data = {
-        name: repo,
-        visibility: vis
-        };
+    const retryLimit = 3;
+    const createGitHubRepo = async (repo, attempt = 1) => {
+        const replacements = { organization: org };
+        const data = { name: repo, visibility: vis };
 
         try {
-        // Make a POST request to create the repository
-        const createResponse = await axios.post(replacePlaceholders(config.repourl, replacements), data, { headers });
+            const createResponse = await axios.post(replacePlaceholders(config.repourl, replacements), data, { headers });
 
-        // Check if the repository was created successfully
-        if (createResponse.status === 201) {
-            // Return relevant information, you can customize this based on your needs
-            return {
-            success: true,
-            message: 'GitHub repository created successfully',
-            repositoryName: repo,
-            organizationName: org
-            };
-        } else {
-            // Return an error message
-            return {
-            success: false,
-            message: 'Failed to create GitHub repository',
-            status: createResponse.status
-            };
-        }
+            if (createResponse.status === 201) {
+                return { success: true, message: 'GitHub repository created successfully', repositoryName: repo, organizationName: org };
+            } else {
+                return { success: false, message: 'Failed to create GitHub repository', status: createResponse.status };
+            }
         } catch (error) {
-        // Log the error and return an error message
-        console.error('Error:', error.message);
-        return {
-            success: false,
-            message: 'Internal server error',
-            status: error.response ? error.response.status : undefined
-        };
+            if (attempt < retryLimit) {
+                return createGitHubRepo(repo, attempt + 1);
+            }
+            console.error('Error:', error.message);
+            return { success: false, message: 'Internal server error', status: error.response?.status };
         }
     };
 
-    // Use map to create GitHub repositories in parallel
-    const results = await Promise.all(repos.map(createGitHubRepo));
+    const results = await Promise.all(repos.map(repo => createGitHubRepo(repo)));
 
     return results;
 }
