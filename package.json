@@ -9,7 +9,7 @@
   "homepage": "https://jetsadawijit.github.io/website-npmjs",
   "main": "index.js",
   "exports": {
-    ".": "./index",
+    "./github": "./github/index.js",
     "./github/build": "./github/build.js",
     "./github/delete": "./github/delete.js",
     "./github/invite": "./github/invite.js",
