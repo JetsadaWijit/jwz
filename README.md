@@ -156,6 +156,7 @@ console.log(res);
 - `note`
     - return `releaseName` `releaseTag` `releaseURL`
     - This is for public organization repository
+
 # `Member`
 
 |Role|User|Email|Website|
