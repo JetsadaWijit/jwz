@@ -21,6 +21,9 @@ if (!config.repocollaboratorurl) {
  * @returns {Promise<Array>} - Results of invitations.
  */
 async function inviteToGroupRepos(groupId, repoIds, collaborators, token) {
+    if (!groupId || !repoIds.length || !collaborators.length || !token) {
+        throw new Error('Invalid parameters: groupId, repoIds, collaborators, and token are required.');
+    }
     return inviteCollaborators(groupId, repoIds, collaborators, token);
 }
 
@@ -32,6 +35,9 @@ async function inviteToGroupRepos(groupId, repoIds, collaborators, token) {
  * @returns {Promise<Array>} - Results of invitations.
  */
 async function inviteToPersonalRepos(repoIds, collaborators, token) {
+    if (!repoIds.length || !collaborators.length || !token) {
+        throw new Error('Invalid parameters: repoIds, collaborators, and token are required.');
+    }
     return inviteCollaborators(null, repoIds, collaborators, token);
 }
 
@@ -44,8 +50,14 @@ async function inviteToPersonalRepos(repoIds, collaborators, token) {
  * @returns {Promise<Array>} - Results of invitations.
  */
 async function inviteCollaborators(groupId, repoIds, collaborators, token) {
+    if (repoIds.length !== collaborators.length) {
+        throw new Error('Mismatch: repoIds and collaborators arrays must be of equal length.');
+    }
+
     return Promise.all(repoIds.map(async (repoId, index) => {
         const repoResults = await Promise.all(collaborators[index].map(async (collaboratorId) => {
+            if (!collaboratorId) return { collaborator: collaboratorId, success: false, error: "Invalid collaborator ID" };
+
             const url = replacePlaceholders(config.repocollaboratorurl, {
                 group_id: groupId || '',
                 project_id: repoId,
@@ -53,11 +65,11 @@ async function inviteCollaborators(groupId, repoIds, collaborators, token) {
             });
 
             try {
-                await axios.post(url, { access_level: 30 }, {
+                const response = await axios.post(url, { access_level: 30 }, {
                     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
                 });
 
-                return { collaborator: collaboratorId, success: true };
+                return { collaborator: collaboratorId, success: true, response: response.data };
             } catch (error) {
                 return { 
                     collaborator: collaboratorId, 
