@@ -5,12 +5,14 @@ const {
     replacePlaceholders
 } = require('../essential');
 
-/*
-    @param group_id = String
-    @param repos = Array
-    @param vis = String
-    @param token = String
-*/
+/**
+ * Creates multiple GitLab repositories.
+ * @param {string} group_id - The GitLab group ID.
+ * @param {Array<string>} repos - List of repository names.
+ * @param {string} vis - Visibility level ('public', 'private', 'internal').
+ * @param {string} token - GitLab API token.
+ * @returns {Promise<Array<Object>>} - List of results for each repository.
+ */
 async function buildRepos(group_id, repos, vis, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
@@ -19,39 +21,50 @@ async function buildRepos(group_id, repos, vis, token) {
         throw new Error("Repository URL is missing in the configuration.");
     }
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-    };
-
     const retryLimit = 3;
+
+    /**
+     * Creates a GitLab repository with retries.
+     * @param {string} repo - Repository name.
+     * @param {number} attempt - Current retry attempt.
+     * @returns {Promise<Object>} - Response object indicating success/failure.
+     */
     const createGitLabRepo = async (repo, attempt = 1) => {
-        const replacements = { group_id };
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        };
+
+        const url = replacePlaceholders(config.repourl, { group_id });
+
         const data = {
             name: repo,
-            visibility: vis, // 'public', 'private', or 'internal'
+            visibility: vis,
         };
 
         try {
-            const createResponse = await axios.post(replacePlaceholders(config.repourl, replacements), data, { headers });
+            const response = await axios.post(url, data, { headers });
 
-            if (createResponse.status === 201) {
+            if (response.status === 201) {
                 return { success: true, message: 'GitLab repository created successfully', repositoryName: repo, groupName: group_id };
             } else {
-                return { success: false, message: 'Failed to create GitLab repository', status: createResponse.status };
+                return { success: false, message: `Failed to create GitLab repository`, status: response.status };
             }
         } catch (error) {
+            const status = error.response?.status || 'Unknown';
+            const errorMessage = error.response?.data?.message || error.message;
+
+            console.error(`Error creating repository '${repo}' (Attempt ${attempt}/${retryLimit}):`, errorMessage);
+
             if (attempt < retryLimit) {
-                return createGitLabRepo(repo, attempt + 1);
+                return await createGitLabRepo(repo, attempt + 1);
             }
-            console.error('Error:', error.message);
-            return { success: false, message: 'Internal server error', status: error.response?.status };
+
+            return { success: false, message: 'Internal server error', status };
         }
     };
 
-    const results = await Promise.all(repos.map(repo => createGitLabRepo(repo)));
-
-    return results;
+    return await Promise.all(repos.map(repo => createGitLabRepo(repo)));
 }
 
 module.exports = buildRepos;
