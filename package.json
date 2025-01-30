@@ -30,7 +30,7 @@
     "mailer",
     "utils"
   ],
-  "author": "JetsadaWijit <ze_ro_owen@hotmail.com>",
+  "author": "JetsadaWijit <jetsadawijit@outlook.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.6.2",
