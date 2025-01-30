@@ -59,16 +59,17 @@ async function inviteCollaborators(groupId, repoIds, collaborators, token) {
             if (!collaboratorId) return { collaborator: collaboratorId, success: false, error: "Invalid collaborator ID" };
 
             const url = replacePlaceholders(config.repocollaboratorurl, {
-                group_id: groupId || '',
-                project_id: repoId,
-                user_id: collaboratorId,
+                project_id: repoId
             });
 
             try {
-                const response = await axios.post(url, { access_level: 30 }, {
+                const response = await axios.post(url, {
+                    user_id: collaboratorId,
+                    access_level: 30
+                }, {
                     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
                 });
-
+            
                 return { collaborator: collaboratorId, success: true, response: response.data };
             } catch (error) {
                 return { 
