@@ -14,11 +14,7 @@
   "main": "index.js",
   "exports": {
     "./github": "./github/index.js",
-    "./github/build": "./github/build.js",
-    "./github/delete": "./github/delete.js",
-    "./github/invite": "./github/invite.js",
-    "./github/release": "./github/release.js",
-    "./github/remove": "./github/remove.js",
+    "./gitlab": "./gitlab/index.js",
     "./mailer/outlook/send": "./mailer/outlook/send.js"
   },
   "scripts": {
