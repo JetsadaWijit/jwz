@@ -1,13 +1,11 @@
 const { buildRepos } = require('build');
-const { deleteRepos } = require('delete');
-const { inviteCollaboratorsToRepos } = require('invite');
-const { getReleaseVersion } = require('release');
-const { removeCollaboratorsFromRepos } = require('remove');
+const { deleteGroupRepos, deletePersonalRepos } = require('delete');
+const { inviteToGroupRepos, inviteToPersonalRepos } = require('invite');
+const { removeFromGroupRepos, removeFromPersonalRepos } = require('remove');
 
 module.exports = {
     buildRepos,
-    deleteRepos,
-    inviteCollaboratorsToRepos,
-    getReleaseVersion,
-    removeCollaboratorsFromRepos
+    deleteGroupRepos, deletePersonalRepos,
+    inviteToGroupRepos, inviteToPersonalRepos,
+    removeFromGroupRepos, removeFromPersonalRepos
 }
