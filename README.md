@@ -2,7 +2,9 @@
 
 This project is created for using the API with Git platforms to build, delete, invite, release, remove, and more.
 
-Currently, the available platform is GitHub and GitLab, with plans to add others in the future.
+## Supported Platforms
+| [GitHub](https://github.com)
+| [GitLab](https://gitlab.com) |
 
 The available functions can be accessed at this [website](https://jetsadawijit.github.io/npmjs-website/).
 
