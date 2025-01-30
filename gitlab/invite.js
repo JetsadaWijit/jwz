@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('./essential');
+const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
 async function inviteCollaboratorsToRepos(groupId, repoIds, collaborators, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
