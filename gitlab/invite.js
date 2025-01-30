@@ -5,18 +5,49 @@ const {
     replacePlaceholders
 } = require('../essential');
 
-async function inviteCollaboratorsToRepos(groupId, repoIds, collaborators, token) {
-    const filePath = path.join(__dirname, 'properties', 'api.properties');
-    const config = readPropertiesFile(filePath);
+const filePath = path.join(__dirname, 'properties', 'api.properties');
+const config = readPropertiesFile(filePath);
 
-    if (!config.repocollaboratorurl) {
-        throw new Error(`Collaborator URL is missing in the configuration file: ${filePath}`);
-    }
+if (!config.repocollaboratorurl) {
+    throw new Error(`Collaborator URL is missing in the configuration file: ${filePath}`);
+}
 
-    const results = await Promise.all(repoIds.map(async (repoId, index) => {
+/**
+ * Invite collaborators to group repositories.
+ * @param {string} groupId - The ID of the group.
+ * @param {Array<string>} repoIds - Array of repository IDs.
+ * @param {Array<Array<string>>} collaborators - Array of collaborator IDs per repository.
+ * @param {string} token - Authentication token.
+ * @returns {Promise<Array>} - Results of invitations.
+ */
+async function inviteToGroupRepos(groupId, repoIds, collaborators, token) {
+    return inviteCollaborators(groupId, repoIds, collaborators, token);
+}
+
+/**
+ * Invite collaborators to personal repositories.
+ * @param {Array<string>} repoIds - Array of repository IDs.
+ * @param {Array<Array<string>>} collaborators - Array of collaborator IDs per repository.
+ * @param {string} token - Authentication token.
+ * @returns {Promise<Array>} - Results of invitations.
+ */
+async function inviteToPersonalRepos(repoIds, collaborators, token) {
+    return inviteCollaborators(null, repoIds, collaborators, token);
+}
+
+/**
+ * Helper function to invite collaborators to repositories.
+ * @param {string|null} groupId - The ID of the group (null for personal repositories).
+ * @param {Array<string>} repoIds - Array of repository IDs.
+ * @param {Array<Array<string>>} collaborators - Array of collaborator IDs per repository.
+ * @param {string} token - Authentication token.
+ * @returns {Promise<Array>} - Results of invitations.
+ */
+async function inviteCollaborators(groupId, repoIds, collaborators, token) {
+    return Promise.all(repoIds.map(async (repoId, index) => {
         const repoResults = await Promise.all(collaborators[index].map(async (collaboratorId) => {
             const url = replacePlaceholders(config.repocollaboratorurl, {
-                group_id: groupId,
+                group_id: groupId || '',
                 project_id: repoId,
                 user_id: collaboratorId,
             });
@@ -38,8 +69,6 @@ async function inviteCollaboratorsToRepos(groupId, repoIds, collaborators, token
 
         return { repoId, results: repoResults };
     }));
-
-    return results;
 }
 
-module.exports = inviteCollaboratorsToRepos;
+module.exports = { inviteToGroupRepos, inviteToPersonalRepos };
