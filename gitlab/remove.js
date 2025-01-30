@@ -1,21 +1,28 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const {
+    readPropertiesFile,
+    replacePlaceholders
+} = require('../essential');
 
 /**
  * Generic function to remove collaborators from repositories.
  *
- * @param {string} baseUrl - The API base URL for either group or personal repositories.
  * @param {Array<string>} repoIds - List of repository IDs.
  * @param {Array<Array<string>>} collaborators - A 2D array where each index corresponds to a repository's list of collaborators (user IDs).
  * @param {string} token - The authentication token for API requests.
  * @param {Object} replacements - Additional replacements such as { group_id } for group repos.
  * @returns {Promise<Array<Object>>} - A promise resolving to an array of results containing repository ID and collaborator removal statuses.
  */
-async function removeCollaborators(baseUrl, repoIds, collaborators, token, replacements = {}) {
-    if (!baseUrl) {
-        throw new Error("API base URL is missing in the configuration.");
+async function removeCollaborators(repoIds, collaborators, token, replacements = {}) {
+    const filePath = path.join(__dirname, 'properties', 'api.properties');
+    const config = readPropertiesFile(filePath);
+
+    if (!config.repocollaboratorurlmember) {
+        throw new Error("API base URL (repocollaboratorurlmember) is missing in the configuration.");
     }
+
+    const baseUrl = config.repocollaboratorurlmember; // Define base URL from properties file
 
     if (!Array.isArray(repoIds) || !Array.isArray(collaborators) || repoIds.length !== collaborators.length) {
         throw new Error("Invalid input parameters. Ensure repoIds and collaborators are properly structured.");
@@ -68,10 +75,7 @@ async function removeCollaborators(baseUrl, repoIds, collaborators, token, repla
  * @returns {Promise<Array<Object>>} - Removal results for each repository.
  */
 async function removeFromGroupRepos(groupId, repoIds, collaborators, token) {
-    const filePath = path.join(__dirname, 'properties', 'api.properties');
-    const config = readPropertiesFile(filePath);
-
-    return removeCollaborators(config.groupRepoUrl, repoIds, collaborators, token, { group_id: groupId });
+    return removeCollaborators(repoIds, collaborators, token, { group_id: groupId });
 }
 
 /**
@@ -83,10 +87,7 @@ async function removeFromGroupRepos(groupId, repoIds, collaborators, token) {
  * @returns {Promise<Array<Object>>} - Removal results for each repository.
  */
 async function removeFromPersonalRepos(repoIds, collaborators, token) {
-    const filePath = path.join(__dirname, 'properties', 'api.properties');
-    const config = readPropertiesFile(filePath);
-
-    return removeCollaborators(config.personalRepoUrl, repoIds, collaborators, token);
+    return removeCollaborators(repoIds, collaborators, token);
 }
 
 // Export the functions
