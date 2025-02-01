@@ -15,7 +15,7 @@
   "exports": {
     "./github": "./github/index.js",
     "./gitlab": "./gitlab/index.js",
-    "./mailer/outlook/send": "./mailer/outlook/send.js"
+    "./mailer/outlook/send": "./mailer/outlook/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
