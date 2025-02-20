@@ -5,12 +5,18 @@ const {
     replacePlaceholders
 } = require('../essential');
 
-/*
-    @param org = String
-    @param repos = Array
-    @param vis = String
-    @param token = String
-*/
+/**
+ * Creates multiple GitHub repositories under a specified organization.
+ * 
+ * @async
+ * @function buildRepos
+ * @param {string} org - The name of the GitHub organization.
+ * @param {string[]} repos - An array of repository names to create.
+ * @param {string} vis - The visibility setting for the repositories ("public" or "private").
+ * @param {string} token - The GitHub personal access token for authentication.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of results for each repository creation.
+ * @throws {Error} Throws an error if the repository URL is missing in the configuration.
+ */
 async function buildRepos(org, repos, vis, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
@@ -25,6 +31,16 @@ async function buildRepos(org, repos, vis, token) {
     };
 
     const retryLimit = 3;
+
+    /**
+     * Creates a GitHub repository with retry logic.
+     *
+     * @async
+     * @function createGitHubRepo
+     * @param {string} repo - The name of the repository to create.
+     * @param {number} [attempt=1] - The current attempt number.
+     * @returns {Promise<Object>} A promise that resolves to the result of the repository creation.
+     */
     const createGitHubRepo = async (repo, attempt = 1) => {
         const replacements = { organization: org };
         const data = { name: repo, visibility: vis };
