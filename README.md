@@ -1,3 +1,5 @@
+[![Npm Website](https://img.shields.io/npm/v/jwz?style=flat&logo=npm)](https://www.npmjs.com/package/jwz)
+
 # Information
 
 This project is created for using the API with Git platforms to build, delete, invite, release, remove, and more.
