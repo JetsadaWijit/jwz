@@ -2,13 +2,13 @@
   "name": "jwz",
   "version": "1.9.2",
   "description": "Utils",
-  "homepage": "https://jetsadawijit.github.io/npmjs-website",
+  "homepage": "https://jetsadawijit.github.io/jwz-website",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JetsadaWijit/npmjs.git"
+    "url": "https://github.com/JetsadaWijit/jwz.git"
   },
   "bugs": {
-    "url": "https://github.com/JetsadaWijit/npmjs/issues",
+    "url": "https://github.com/JetsadaWijit/jwz/issues",
     "email": "jetsadawijit@outlook.com"
   },
   "main": "index.js",
