@@ -24,13 +24,17 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "ai",
     "api",
+    "deepseek",
     "git",
     "github",
     "gitlab",
     "jw",
     "jwz",
     "mailer",
+    "openai",
+    "openrouter",
     "utils"
   ],
   "author": "JetsadaWijit <jetsadawijit@outlook.com>",
