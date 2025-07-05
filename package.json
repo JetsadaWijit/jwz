@@ -13,6 +13,9 @@
   },
   "main": "index.js",
   "exports": {
+    "./deepseek": "./ai/deepseek.js",
+    "./openai": "./ai/openai.js",
+    "./openrouter": "./ai/openrouter.js",
     "./github": "./github/index.js",
     "./gitlab": "./gitlab/index.js",
     "./mailer/outlook/send": "./mailer/outlook/index.js"
