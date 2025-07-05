@@ -1,9 +1,6 @@
 {
     "name": "Container",
     "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
-    "features": {
-      "ghcr.io/devcontainers-contrib/features/jshint:2": {}
-    },
     "postCreateCommand": "npm install",
     "customizations": {
         "vscode": {
