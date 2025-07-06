@@ -8,7 +8,7 @@ This project is created for using the API with Git platforms to build, delete, i
 | [GitHub](https://github.com)
 | [GitLab](https://gitlab.com) |
 
-The available functions can be accessed at this [website](https://jetsadawijit.github.io/npmjs-website/).
+The available functions can be accessed at this [website](https://jetsadawijit.github.io/jwz-website/).
 
 # `Member`
 
