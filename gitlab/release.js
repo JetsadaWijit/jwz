@@ -2,7 +2,15 @@ const axios = require('axios');
 const path = require('path');
 const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
-async function getReleaseVersion(groupId, projectId, version) {
+/**
+ * Fetches a release version from GitLab.
+ * @param {string} groupId - The ID of the group (unused but kept for signature).
+ * @param {string} projectId - The ID of the project.
+ * @param {string} version - The tag name of the release.
+ * @param {string} token - The GitLab access token.
+ * @returns {Promise<Object>}
+ */
+async function getReleaseVersion(groupId, projectId, version, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
@@ -14,7 +22,11 @@ async function getReleaseVersion(groupId, projectId, version) {
 
     try {
         const url = replacePlaceholders(config.reporeleaseurl, replacements);
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
         const release = response.data.find(r => r.tag_name === version);
 

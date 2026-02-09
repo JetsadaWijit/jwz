@@ -1,9 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const {
-    readPropertiesFile,
-    replacePlaceholders
-} = require('../essential');
+const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
 /**
  * Generic function to remove collaborators from repositories.
@@ -22,7 +19,7 @@ async function removeCollaborators(repoIds, collaborators, token, replacements =
         throw new Error("API base URL (repocollaboratorurlmember) is missing in the configuration.");
     }
 
-    const baseUrl = config.repocollaboratorurlmember; // Define base URL from properties file
+    const baseUrl = config.repocollaboratorurlmember;
 
     if (!Array.isArray(repoIds) || !Array.isArray(collaborators) || repoIds.length !== collaborators.length) {
         throw new Error("Invalid input parameters. Ensure repoIds and collaborators are properly structured.");
@@ -67,7 +64,6 @@ async function removeCollaborators(repoIds, collaborators, token, replacements =
 
 /**
  * Removes collaborators from repositories owned by a group/organization.
- *
  * @param {string} groupId - The group ID owning the repositories.
  * @param {Array<string>} repoIds - List of repository IDs.
  * @param {Array<Array<string>>} collaborators - List of collaborators per repository.
@@ -80,7 +76,6 @@ async function removeFromGroupRepos(groupId, repoIds, collaborators, token) {
 
 /**
  * Removes collaborators from personal repositories.
- *
  * @param {Array<string>} repoIds - List of repository IDs.
  * @param {Array<Array<string>>} collaborators - List of collaborators per repository.
  * @param {string} token - Authentication token.
@@ -90,5 +85,4 @@ async function removeFromPersonalRepos(repoIds, collaborators, token) {
     return removeCollaborators(repoIds, collaborators, token);
 }
 
-// Export the functions
 module.exports = { removeFromGroupRepos, removeFromPersonalRepos };

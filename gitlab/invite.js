@@ -1,9 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const {
-    readPropertiesFile,
-    replacePlaceholders
-} = require('../essential');
+const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
 const filePath = path.join(__dirname, 'properties', 'api.properties');
 const config = readPropertiesFile(filePath);
@@ -69,13 +66,13 @@ async function inviteCollaborators(groupId, repoIds, collaborators, token) {
                 }, {
                     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
                 });
-            
+
                 return { collaborator: collaboratorId, success: true, response: response.data };
             } catch (error) {
-                return { 
-                    collaborator: collaboratorId, 
-                    success: false, 
-                    error: error.response?.data || error.message 
+                return {
+                    collaborator: collaboratorId,
+                    success: false,
+                    error: error.response?.data || error.message
                 };
             }
         }));

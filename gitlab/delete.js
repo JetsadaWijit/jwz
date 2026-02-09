@@ -1,9 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const {
-    readPropertiesFile,
-    replacePlaceholders
-} = require('../essential');
+const { readPropertiesFile, replacePlaceholders } = require('../essential');
 
 /**
  * Deletes multiple repositories from a GitLab group.
@@ -49,8 +46,6 @@ async function deleteRepos(repoIds, token, replacements = {}) {
             const updatedReplacements = { ...replacements, project_id: repoId };
             const url = replacePlaceholders(config.repospecificurl, updatedReplacements);
 
-            console.log(`Deleting repo ${repoId} at URL: ${url}`);
-
             try {
                 const response = await axios.delete(url, {
                     headers: {
@@ -70,12 +65,6 @@ async function deleteRepos(repoIds, token, replacements = {}) {
         });
 
         const results = await Promise.all(deleteRequests);
-
-        const failed = results.filter((result) => result.status === 'failed');
-        if (failed.length > 0) {
-            console.warn('Some repositories failed to delete:', JSON.stringify(failed, null, 2));
-        }
-
         return results;
     } catch (error) {
         console.error('Error deleting GitLab repos:', error);

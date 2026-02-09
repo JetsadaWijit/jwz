@@ -8,12 +8,12 @@ const { readPropertiesFile, replacePlaceholders } = require('../essential');
  * @param {string} org - The organization or user that owns the repository.
  * @param {string} repo - The name of the repository.
  * @param {string} version - The release tag to fetch.
+ * @param {string} token - The GitHub personal access token for authentication.
  * @returns {Promise<{ success: boolean, releaseName?: string, releaseTag?: string, releaseURL?: string, message?: string }>} 
  * An object indicating success or failure, with release details if found.
- * 
- * @throws {Error} If the release URL is missing in the configuration.
+ * * @throws {Error} If the release URL is missing in the configuration.
  */
-async function getReleaseVersion(org, repo, version) {
+async function getReleaseVersion(org, repo, version, token) {
     const filePath = path.join(__dirname, 'properties', 'api.properties');
     const config = readPropertiesFile(filePath);
 
@@ -24,7 +24,12 @@ async function getReleaseVersion(org, repo, version) {
     const replacements = { organization: org, repository: repo };
 
     try {
-        const response = await axios.get(replacePlaceholders(config.reporeleaseurl, replacements));
+        const response = await axios.get(replacePlaceholders(config.reporeleaseurl, replacements), {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/vnd.github.v3+json'
+            }
+        });
         const release = response.data.find(r => r.tag_name === version);
 
         if (release) {
