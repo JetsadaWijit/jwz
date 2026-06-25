@@ -11,14 +11,14 @@
     "url": "https://github.com/JetsadaWijit/jwz/issues",
     "email": "jetsadawijit@outlook.com"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "exports": {
-    "./deepseek": "./ai/deepseek.js",
-    "./openai": "./ai/openai.js",
-    "./openrouter": "./ai/openrouter.js",
-    "./github": "./github/index.js",
-    "./gitlab": "./gitlab/index.js",
-    "./mailer/outlook/send": "./mailer/outlook/index.js"
+    "./deepseek": "./src/ai/deepseek.js",
+    "./openai": "./src/ai/openai.js",
+    "./openrouter": "./src/ai/openrouter.js",
+    "./github": "./src/github/index.js",
+    "./gitlab": "./src/gitlab/index.js",
+    "./mailer/outlook/send": "./src/mailer/outlook/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
