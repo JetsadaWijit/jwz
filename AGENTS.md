@@ -16,20 +16,27 @@ This file is an overview. It contains no rules of its own.
 ## Reading Order
 
 1. Read this file, `AGENTS.md`.
-2. Read [`.agents/INDEX.md`](.agents/INDEX.md).
-3. Read only the specific instruction file that the task requires.
+2. Read the root [`INDEX.md`](INDEX.md), and nothing else at this stage.
+3. From its routing table, pick the ONE index whose scope matches the task, and
+   read that index.
+4. If that index delegates to a child index, follow the one branch that matches.
+5. Only then open the specific file or files you need.
 
-## Registry and Lazy Loading
+## Routing Protocol
 
-When routing a task, load ONLY the `name` and `description` frontmatter of every
-`.agents/**/*.md` file and build a registry from them. Do NOT read instruction
-bodies while routing. Load a body only after that instruction has been selected
-for the task at hand.
+Route by reading index tables, not by reading files. Do NOT load every `INDEX.md`.
+Do NOT bulk scan `.agents/**` to build a registry. Do NOT read an instruction body
+until that instruction has been selected. Each index row's purpose text is what you
+route on; the file body is what you load after choosing. This is the whole point of
+the index tree, so never defeat it by reading ahead.
 
 ## Iron Rule: Separation of Concerns
 
 * `AGENTS.md` and `README.md` are overviews. They must never carry detailed rules
   or detailed documentation.
+* The root [`INDEX.md`](INDEX.md) is a router only. It lists other indexes. It
+  must never contain rules, documentation, prose, or direct links to leaf content,
+  and it must never be used to dictate or write files inside any subtree.
 * [`.agents/INDEX.md`](.agents/INDEX.md) is the sole authority that indexes and
   manages `.agents/`. Nothing outside `.agents/` may dictate or write files inside
   it.
@@ -42,6 +49,8 @@ for the task at hand.
 * New documentation goes to `wiki/{folder}/{file}.md`.
 * The placement authority is
   [`.agents/rules/directories.md`](.agents/rules/directories.md).
+* New or updated indexes follow
+  [`.agents/creators/index-creator.md`](.agents/creators/index-creator.md).
 
 ## Discovery Protocol
 

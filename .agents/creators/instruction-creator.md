@@ -15,6 +15,7 @@ documentation, and you do not write rules into `AGENTS.md`.
 | Create and edit `.agents/{folder}/{file}.md`. | Write documentation pages. That is the information creator's job, and they live in `wiki/`. |
 | Register your files in [`../INDEX.md`](../INDEX.md). | Put rule bodies in `AGENTS.md` or `README.md`. Both are overviews only. |
 | Create a new `.agents/` folder when none fits. | Write into `wiki/`. |
+| Add a pointer row to an index. | Put a rule inside any `INDEX.md`. An index carries pointers only. |
 
 ## Procedure
 
@@ -31,10 +32,20 @@ documentation, and you do not write rules into `AGENTS.md`.
 4. Write the file: YAML frontmatter with a unique kebab-case `name` and a one line
    `description` of at most 140 characters, then one `#` H1 title, then the body.
    One topic per file. Rules must be imperative and testable.
-5. Register the file in [`../INDEX.md`](../INDEX.md). If you created a folder,
-   also register the folder in [`../rules/directories.md`](../rules/directories.md).
-   Both happen in the same commit as the file itself.
+5. Register the file in the index that owns that scope,
+   [`../INDEX.md`](../INDEX.md), following
+   [`index-creator.md`](index-creator.md). If you created a folder, also register
+   the folder in [`../rules/directories.md`](../rules/directories.md), and if that
+   folder needs its own index, add it to the root
+   [`../../INDEX.md`](../../INDEX.md). All of it happens in the same commit as the
+   file itself.
 6. Commit following the convention below.
+
+## Indexes
+
+Every file you create or remove is registered in the index that owns that scope,
+in the same commit, per [`index-creator.md`](index-creator.md). Never write a rule
+into an index.
 
 ## Placement
 

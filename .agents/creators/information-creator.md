@@ -24,16 +24,25 @@ You create and maintain the documentation under `wiki/`. You never write into
 2. Write the page. No frontmatter. One `#` H1 title, then task oriented content.
    Every command and path must be real and taken from this repository. Do not
    create placeholder pages full of TODOs; fewer real pages is better.
-3. Add the page to [`../../wiki/INDEX.md`](../../wiki/INDEX.md) in the same
-   commit. If you created a folder, also register it in
-   [`../rules/directories.md`](../rules/directories.md).
+3. Register the page in the index that owns that scope,
+   [`../../wiki/INDEX.md`](../../wiki/INDEX.md), in the same commit, following
+   [`index-creator.md`](index-creator.md). If you created a folder, also register
+   it in [`../rules/directories.md`](../rules/directories.md), and if that folder
+   needs its own index, add it to the root [`../../INDEX.md`](../../INDEX.md).
 4. If the change is user facing, check that `README.md` still links to the right
    page.
 5. Keep `README.md` an overview only: project name, one paragraph description,
-   short feature list, quick start commands, a documentation table linking into
-   `wiki/`, and the license line. If detail has crept into `README.md`, move it
+   short feature list, quick start commands, a documentation section pointing at
+   [`../../wiki/INDEX.md`](../../wiki/INDEX.md) plus the two or three pages a
+   newcomer needs first, and the license line. If detail has crept into `README.md`, move it
    down into a `wiki/` page and leave a link behind.
 6. Commit following the convention below.
+
+## Indexes
+
+Every page you create or remove is registered in the index that owns that scope,
+in the same commit, per [`index-creator.md`](index-creator.md). Never write
+documentation into an index; an index carries pointers only.
 
 ## Placement
 

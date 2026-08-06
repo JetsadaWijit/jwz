@@ -45,14 +45,23 @@ Every changelog opens with the release date and a one line summary of the releas
    one line summary, and only the sections that have entries.
 3. Write entries in terms of what a consumer of the package observes, not in terms
    of which files were touched.
-4. Update the logs listing in [`../../wiki/INDEX.md`](../../wiki/INDEX.md) so every
-   version is listed newest first.
+4. Register the version in [`../../wiki/logs/INDEX.md`](../../wiki/logs/INDEX.md),
+   newest first, one row per version directory with a one line summary and the
+   documents it contains, following [`index-creator.md`](index-creator.md).
 5. Commit following the convention below.
 
 ## Released Versions Are Immutable
 
 Never edit a released version's log to change history. Corrections go into the
 next version's log.
+
+## Indexes
+
+Every log you create or remove is registered in
+[`../../wiki/logs/INDEX.md`](../../wiki/logs/INDEX.md) in the same commit, per
+[`index-creator.md`](index-creator.md). Never write a rule or a summary of the
+change itself into an index; the row carries one line and the log carries the
+detail.
 
 ## Placement
 

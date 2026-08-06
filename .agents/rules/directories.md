@@ -22,7 +22,7 @@ and in [`../INDEX.md`](../INDEX.md) in the same commit.
 |---|---|---|
 | `rules/` | Repository wide rules and the directory architecture itself. | in use |
 | `git/` | Branching strategy, commit format, pull request etiquette. | in use |
-| `creators/` | The instruction, information, and changelog creator agents. | in use |
+| `creators/` | The instruction, information, changelog, and index creator agents. | in use |
 | `prompts/` | Standing prompt templates and few shot examples. | in use |
 | `api/` | API design standards and specification guidelines. | in use |
 | `security/` | Security policy, secret handling, vulnerability prevention. | in use |
@@ -60,9 +60,11 @@ and in [`../INDEX.md`](../INDEX.md) in the same commit.
    lowercase kebab-case, a plain topic noun, for example `.agents/observability/`
    or `wiki/integrations/`, and put the file there.
 3. Whenever you create a new folder, register it in the table above AND in the
-   matching index, [`../INDEX.md`](../INDEX.md) or
-   [`../../wiki/INDEX.md`](../../wiki/INDEX.md), in the same commit. The tables
-   above are a baseline, not a closed set.
+   index that owns that scope, [`../INDEX.md`](../INDEX.md) or
+   [`../../wiki/INDEX.md`](../../wiki/INDEX.md), in the same commit. If the new
+   folder needs its own index, register that index in the root
+   [`../../INDEX.md`](../../INDEX.md) too. The tables above are a baseline, not a
+   closed set.
 4. If an existing file already covers the subject, extend that file instead of
    adding a near duplicate. This is still subject to the discovery protocol:
    propose the change, do not self apply it.
@@ -83,9 +85,14 @@ See [`versioning.md`](versioning.md).
 
 ## E. File Format
 
-* Every `.md` file under `.agents/`, plus the root `AGENTS.md`, starts with YAML
-  frontmatter carrying a unique kebab-case `name` and a one line `description` of
-  at most 140 characters, followed by a single `#` H1 title and the body.
-* Files under `wiki/` are plain documentation with no frontmatter.
+* Every `.md` file under `.agents/`, the root `AGENTS.md`, and every `INDEX.md`
+  anywhere in the repository starts with YAML frontmatter carrying a unique
+  kebab-case `name` and a one line `description` of at most 140 characters,
+  followed by a single `#` H1 title and the body.
+* Files under `wiki/` are plain documentation with no frontmatter, except
+  `INDEX.md`, which always carries it because it is a routing surface.
+* `INDEX.md` is the one uppercase file name, everywhere it appears. The shape of
+  every index is owned by
+  [`../creators/index-creator.md`](../creators/index-creator.md).
 * One topic per file. If a file needs two H1 level subjects, it is two files.
 * Keep links relative and clickable.

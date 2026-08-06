@@ -35,13 +35,17 @@ runnable example per function, lives on the project website:
 
 **https://jetsadawijit.github.io/jwz-website/**
 
+Every documentation page is listed in [`wiki/INDEX.md`](wiki/INDEX.md). Start
+with these:
+
 | Page | What it covers |
 |---|---|
 | [`wiki/information/overview.md`](wiki/information/overview.md) | What the package is and every published entry point. |
 | [`wiki/information/architecture.md`](wiki/information/architecture.md) | Source layout and how a call reaches an API. |
 | [`wiki/environments/setup.md`](wiki/environments/setup.md) | Installing, working locally, and the credentials each area needs. |
-| [`wiki/INDEX.md`](wiki/INDEX.md) | Index of every documentation page. |
-| [`AGENTS.md`](AGENTS.md) | Entry point for agents working in this repository. |
+
+Agents start at [`AGENTS.md`](AGENTS.md) and route through
+[`INDEX.md`](INDEX.md).
 
 ## Member
 

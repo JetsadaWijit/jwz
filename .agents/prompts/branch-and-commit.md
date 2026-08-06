@@ -12,10 +12,14 @@ user does not need to repeat it.
 
 1. Create a branch off the default branch named `{type}/{primary-noun}`.
 2. Do the work.
-3. Commit each logical change with `type(scope): description`. Review the diff
+3. Update the owning index for anything added or removed, per
+   [`../creators/index-creator.md`](../creators/index-creator.md).
+4. Commit each logical change with `type(scope): description`. Review the diff
    before every commit.
-4. Push with `git push -u origin {branch}`.
-5. Ask the user before opening a pull request. Never open one on your own.
+5. Push with `git push -u origin {branch}`.
+6. Ask the user before opening a pull request. Never open one on your own. The
+   title and body follow
+   [`../git/pull-request-template.md`](../git/pull-request-template.md).
 
 ## Types
 
