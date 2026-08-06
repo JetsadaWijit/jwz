@@ -1,29 +1,31 @@
+---
+name: wiki-index
+description: Index of the jwz documentation tree. Pages about what the package is, how it is built, and how to work on it.
+---
+
 # Wiki Index
 
-Documentation for the `jwz` package. This index lists every page in this tree.
-Instructions for agents live in [`../.agents/INDEX.md`](../.agents/INDEX.md) and
-are not indexed here.
+**Scope:** `wiki/`
+**Parent:** [Root Index](../INDEX.md)
 
-Any page added to or removed from `wiki/` must be reflected in this file in the
-same commit.
+Documentation for the `jwz` package. Any page added to or removed from `wiki/` is
+reflected here in the same commit. This index never writes into `.agents/`.
 
 ## information/
 
-| Page | Purpose |
+| File | Purpose |
 |---|---|
-| [`information/overview.md`](information/overview.md) | What the package is, what it covers, and the full list of published entry points. |
-| [`information/architecture.md`](information/architecture.md) | How the source is organized and how a request flows from an entry point to an API. |
+| [`information/overview.md`](information/overview.md) | Learn what the package is and every published entry point. |
+| [`information/architecture.md`](information/architecture.md) | Understand the source layout and how a call reaches an API. |
 
 ## environments/
 
-| Page | Purpose |
+| File | Purpose |
 |---|---|
-| [`environments/setup.md`](environments/setup.md) | Installing the package, working on it locally, and the credentials each area needs. |
+| [`environments/setup.md`](environments/setup.md) | Install the package, work on it locally, and supply credentials. |
 
-## logs/
+## Child Indexes
 
-Newest first.
-
-| Version | Log |
-|---|---|
-| 3.0.0 | [`logs/3/0/0/CHANGELOG.md`](logs/3/0/0/CHANGELOG.md) |
+| Index | Scope | Load when |
+|---|---|---|
+| [`logs/INDEX.md`](logs/INDEX.md) | Versioned change logs under `wiki/logs/` | You need release history or must record a change. |
