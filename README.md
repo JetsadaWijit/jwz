@@ -2,34 +2,53 @@
 
 # jwz
 
-## Overview
+jwz is a Node.js utility package that wraps several common APIs behind one
+consistent interface, so you can automate routine work without rewriting the same
+boilerplate in every project.
 
-jwz is a Node.js utility package that wraps several common APIs behind one consistent interface, so you can automate routine work without rewriting the same boilerplate in every project.
+## Features
 
-It groups its utilities into three areas:
-
-* **Git platforms:** build, delete, invite, release, and remove operations for GitHub and GitLab.
+* **Git platforms:** build, delete, invite, release, and remove operations for
+  [GitHub](https://github.com) and [GitLab](https://gitlab.com).
 * **AI providers:** clients for DeepSeek, OpenAI, and OpenRouter.
 * **Mailer:** sending email through Outlook.
 
-## Install
+## Quick Start
 
 ```sh
 npm install jwz
 ```
 
-## Supported Platforms
-| [GitHub](https://github.com)
-| [GitLab](https://gitlab.com) |
+```js
+const github = require('jwz/github');
+const openai = require('jwz/openai');
+const sendEmail = require('jwz/mailer/outlook/send');
+```
 
-## Full Documentation
+Every function takes its credential as a parameter. The package never reads an
+environment variable and never stores a token.
 
-This page is only a short overview. To understand the project fully, including every available module, function, parameter, and usage example, please read the project website:
+## Documentation
+
+This page is an overview. The full function reference, with every parameter and a
+runnable example per function, lives on the project website:
 
 **https://jetsadawijit.github.io/jwz-website/**
 
-# `Member`
+| Page | What it covers |
+|---|---|
+| [`wiki/information/overview.md`](wiki/information/overview.md) | What the package is and every published entry point. |
+| [`wiki/information/architecture.md`](wiki/information/architecture.md) | Source layout and how a call reaches an API. |
+| [`wiki/environments/setup.md`](wiki/environments/setup.md) | Installing, working locally, and the credentials each area needs. |
+| [`wiki/INDEX.md`](wiki/INDEX.md) | Index of every documentation page. |
+| [`AGENTS.md`](AGENTS.md) | Entry point for agents working in this repository. |
+
+## Member
 
 |Role|User|Email|Website|
 |-|-|-|-|
 |owner|[JetsadaWijit](https://github.com/JetsadaWijit)|jetsadawijit@outlook.com|[Profile](https://jetsadawijit.github.io)|
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).
