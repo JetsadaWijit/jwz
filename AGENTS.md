@@ -1,56 +1,66 @@
-# Agent Instructions
+---
+name: agents-entry-point
+description: Entry point for agents working in the jwz repository. Overview and routing only, never detailed rules.
+---
 
-**Strict Rules:**
-* Agents must read `AGENTS.md`, `SKILLS.md`, and all `README.md` files located within the documented Agent Directories, and save their entire contents within memory.
-* Agents must ask for the user's approval before editing `AGENTS.md` or `SKILLS.md`.
-* Every agent-related directory (e.g., `.agents/`, `.skills/`, `.tools/`) must contain a `README.md` file that serves as the index for its contents. Do not index these files in the root `AGENTS.md` or `SKILLS.md`.
-* Never work directly on the `master` or `main` branch.
-* Always verify if your current task aligns with the active branch. If it does not, create a new branch. Do not create a new branch if you are continuing existing work on the appropriate branch.
-* When finishing work, you must also check the code security for any files that were modified and committed in the current branch.
-* Code and comments must not contain dashes.
+# AGENTS
 
-The root `AGENTS.md` and `SKILLS.md` files must remain universally applicable to the entire repository. If you conceptualize a new instruction, skill, tool, or any context-specific data that is not universally applicable, create it within the appropriate Agent Directory (such as `.agents/`, `.skills/`, `.tools/`, `.personas/`, etc.) instead.
+`jwz` is a Node.js utility package published to npm. It wraps several common HTTP
+APIs behind one consistent interface: Git platform operations for GitHub and
+GitLab, chat clients for DeepSeek, OpenAI and OpenRouter, and an Outlook mailer.
+The published surface is defined by the `exports` map in `package.json`, and the
+source lives under `src/`.
 
-## Agent Directories
+This file is an overview. It contains no rules of its own.
 
-| Name | Description |
-|---|---|
-| `.tools/` | Contains definitions, schemas, or scripts of tools the agents are permitted to use. |
-| `.knowledge/` | Domain-specific context, reference documents, or knowledge base for the agent. |
-| `.personas/` | Defines specific roles, personalities, or perspectives for agents to adopt. |
-| `.ethics/` | Safety bounds, ethical guidelines, and constraints to ensure responsible agent behavior. |
+## Reading Order
 
-## Suggesting New Content
+1. Read this file, `AGENTS.md`.
+2. Read [`.agents/INDEX.md`](.agents/INDEX.md).
+3. Read only the specific instruction file that the task requires.
 
-While working, if you discover a useful idea, rule, or skill that could improve `AGENTS.md` or `SKILLS.md`, do not apply the changes immediately. Instead, upon finishing your current task, suggest the new additions to the user and allow them to decide whether to integrate them.
+## Registry and Lazy Loading
 
-# Git & Branching Workflow
+When routing a task, load ONLY the `name` and `description` frontmatter of every
+`.agents/**/*.md` file and build a registry from them. Do NOT read instruction
+bodies while routing. Load a body only after that instruction has been selected
+for the task at hand.
 
-* **Branch Isolation (CRITICAL):** If the current branch is master, checkout a new branch immediately before making modifications.
-* **Task Scoping:** When you start work from a user prompt, check whether it relates to the current branch. If the task is unrelated, create a new branch specific to it. If the work stays within the current scope (for example, adding a new function or fixing an error in existing work) do not create a new branch; continue on the current one.
-* **Branch Naming (STRICT):** Must strictly follow the `{type}/{primary_noun}` or `{type}/{primary_noun}_{secondary_noun}` format. Do not use verbs or Jira IDs.
-  * Allowed Types: `feat/`, `fix/`, `docs/`, `style/`, `refactor/`, `perf/`, `test/`, `build/`, `ci/`, `chore/`, `revert/`
-* **Commit Frequency & Verification:** Commit each change or group related commits. Do not wait for the entire session to finish. Always check the diff before creating a commit.
-* **Pull Requests (PR):** PRs must be opened sequentially in the correct order. Always ask the user for permission before creating a PR.
+## Iron Rule: Separation of Concerns
 
-# Commit Message Conventions (STRICT)
+* `AGENTS.md` and `README.md` are overviews. They must never carry detailed rules
+  or detailed documentation.
+* [`.agents/INDEX.md`](.agents/INDEX.md) is the sole authority that indexes and
+  manages `.agents/`. Nothing outside `.agents/` may dictate or write files inside
+  it.
+* [`wiki/INDEX.md`](wiki/INDEX.md) indexes `wiki/` and must never write into
+  `.agents/`.
 
-Commits MUST follow the Conventional Commits specification. Commit messages must be plain and contain no links; do not reference pull requests or issues with #.
+## Placement
 
-**Structure**
-<type>[optional scope]: <description>
+* New instructions go to `.agents/{folder}/{file}.md`.
+* New documentation goes to `wiki/{folder}/{file}.md`.
+* The placement authority is
+  [`.agents/rules/directories.md`](.agents/rules/directories.md).
 
-[optional body]
+## Discovery Protocol
 
-[optional footer(s)]
+While working, if you find an instruction worth adding, a new rule, or content
+that belongs in an existing instruction file, you must NOT create or edit it on
+your own. Present each finding to the user separately, each in its own code
+block, including the proposed file path, `name`, `description`, and full body.
+Let the user select which ones to apply. Create only what the user selects.
 
-**Types**
-* `fix:` Patches a bug (PATCH).
-* `feat:` Introduces a new feature (MINOR).
-* `BREAKING CHANGE:` Introduces a breaking API change (MAJOR).
-* Other supported types: `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`
+## Standing Conventions
 
-**Examples**
-* `feat(api)!: send an email to the customer when a product is shipped`
-* `fix: prevent racing of requests`
-* `chore(rojo): initial project structure`
+Every branch and every commit follows
+[`.agents/git/branching-strategy.md`](.agents/git/branching-strategy.md) and
+[`.agents/git/commit-conventions.md`](.agents/git/commit-conventions.md). The
+standing prompt is
+[`.agents/prompts/branch-and-commit.md`](.agents/prompts/branch-and-commit.md).
+The user never has to restate these.
+
+## Version Rule
+
+Never change the project version without explicit user approval. See
+[`.agents/rules/versioning.md`](.agents/rules/versioning.md).
