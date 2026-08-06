@@ -17,7 +17,9 @@ description: Branch off the default branch for every task, name branches {type}/
   error in work already on this branch, stay on it.
 * Keep branches short lived and rebased on the default branch.
 * Always ask the user for permission before opening a pull request. Open pull
-  requests sequentially, in the order their changes depend on each other.
+  requests sequentially, in the order their changes depend on each other, and
+  merge them in that same order. The title and body follow
+  [`pull-request-template.md`](pull-request-template.md).
 
 ## Naming
 
