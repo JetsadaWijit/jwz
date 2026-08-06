@@ -5,8 +5,10 @@
 
 # Agent, Persona, and AI instructions
 AGENTS.md
-SKILLS.md
-CLAUDE.md
+.agents/
+
+# Documentation
+wiki/
 
 # Dependencies
 node_modules/
