@@ -9,6 +9,14 @@ description: Rules specific to the jwz package: source layout, publish surface, 
 subject has its own instruction file, this file links to it instead of restating
 it.
 
+## Mode And Shared Set
+
+This repository is a **consumer** (Mode B). The conventions that are true across
+the organization — branching, commits, pull requests, task workflow, the creators,
+the directory architecture — are served by the `lxagents-agents-base` MCP connector
+and read over `agents://`. They are not stored here, and this file never restates
+them. Only what is specific to this package belongs below.
+
 ## Source Layout
 
 | Path | Holds |
@@ -29,11 +37,34 @@ for that platform.
 The public surface is the `exports` map in `package.json` and nothing else. A file
 that is not reachable from that map is internal. Adding, renaming, or removing an
 entry in that map is a breaking change for consumers, so treat it under
-[`versioning.md`](versioning.md).
+`{shared}/rules/versioning.md`.
 
 `.npmignore` decides what ships in the tarball. Agent instructions (`AGENTS.md`,
 `.agents/`) and documentation (`wiki/`) are excluded on purpose. Keep it that way
 when adding new non runtime directories.
+
+## Version Carriers Here
+
+`{shared}/rules/versioning.md` gates every version change. These are the carriers
+that actually exist in this repository, and the commands that rewrite them:
+
+* the `version` field in `package.json`, and the matching field in
+  `package-lock.json`;
+* git tags and GitHub release drafts on this repository;
+* a new `wiki/logs/{Major}/{Minor}/{Patch}/` directory, which is itself a version
+  claim;
+* `npm version` and `npm publish`, or any command that rewrites the version.
+
+Because the package is published to npm, a bump is visible to every consumer the
+moment it lands. Propose it and wait; never stage one.
+
+## Commit Scopes Here
+
+`{shared}/git/commit-conventions.md` defines the commit format. The scopes below are
+the real subsystem names in this repository, and a commit touching one of them uses
+it:
+
+`github`, `gitlab`, `ai`, `mailer`, `agents`, `wiki`, `deps`
 
 ## Commands
 

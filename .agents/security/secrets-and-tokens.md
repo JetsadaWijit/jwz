@@ -51,4 +51,4 @@ token.
 Security fixes in dependencies are handled under
 [`../dependencies/package-policy.md`](../dependencies/package-policy.md). A
 dependency update that closes a vulnerability is still a version decision for the
-user; see [`../rules/versioning.md`](../rules/versioning.md).
+user; see `{shared}/rules/versioning.md`.

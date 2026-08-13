@@ -44,10 +44,10 @@ pull requests arrive automatically.
 
 Updating a dependency does not authorize changing the package version. Keep the
 two separate and ask the user before any version change. See
-[`../rules/versioning.md`](../rules/versioning.md).
+`{shared}/rules/versioning.md`.
 
 ## Commit Style
 
 Use the `deps` scope: `chore(deps): update axios to 1.7.0`, or `fix(deps):` when
 the update closes a vulnerability. See
-[`../git/commit-conventions.md`](../git/commit-conventions.md).
+`{shared}/git/commit-conventions.md`.
