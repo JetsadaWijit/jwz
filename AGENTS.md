@@ -63,8 +63,9 @@ this session, the user wins — and you say out loud which rule you are setting 
 
 ## Trigger Table
 
-The authority behind this table is `{shared}/rules/auto-activation.md`, which it
-mirrors row for row. Any row whose file is overridden locally resolves to the local
+The authority behind this table is `{shared}/rules/auto-activation.md`. Every shared
+row is reproduced unchanged and in order; this repository's own instructions are
+appended below them. Any row whose file is overridden locally resolves to the local
 copy; the override table in
 [`.agents/index/root-index.md`](.agents/index/root-index.md) is the list.
 
@@ -86,6 +87,7 @@ copy; the override table in
 | Record progress, a decision, or session state | `{shared}/creators/memory-creator.md` |
 | Touch anything that carries a version number | `{shared}/rules/versioning.md` |
 | Record a release | `{shared}/creators/changelog-creator.md` |
+| Report finished work back to the user | `{shared}/rules/work-summary.md` |
 | Need project facts, commands, or orientation | [`.agents/wiki/context/repository-map.md`](.agents/wiki/context/repository-map.md) |
 | Do anything at all in this project | [`.agents/rules/repository.md`](.agents/rules/repository.md) |
 | Write or change an API client module | [`.agents/api/api-client-conventions.md`](.agents/api/api-client-conventions.md) |
