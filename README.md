@@ -35,7 +35,8 @@ runnable example per function, lives on the project website:
 
 **https://jetsadawijit.github.io/jwz-website/**
 
-Every documentation page is listed in [`wiki/INDEX.md`](wiki/INDEX.md). Start
+Every documentation page is listed in
+[`.agents/index/project-wiki-index.md`](.agents/index/project-wiki-index.md). Start
 with these:
 
 | Page | What it covers |
@@ -44,8 +45,14 @@ with these:
 | [`wiki/information/architecture.md`](wiki/information/architecture.md) | Source layout and how a call reaches an API. |
 | [`wiki/environments/setup.md`](wiki/environments/setup.md) | Installing, working locally, and the credentials each area needs. |
 
+## Working With Agents
+
 Agents start at [`AGENTS.md`](AGENTS.md) and route through
-[`INDEX.md`](INDEX.md).
+[`.agents/index/root-index.md`](.agents/index/root-index.md).
+
+The conventions shared across the organization are not stored in this repository.
+They are served by the `lxagents-agents-base` MCP connector and resolved at read
+time; this repository carries only what is its own.
 
 ## Member
 

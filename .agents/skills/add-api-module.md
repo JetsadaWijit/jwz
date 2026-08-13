@@ -56,7 +56,7 @@ Adding an operation to an existing platform needs no change to `package.json`,
 because the platform entry already points at the folder `index.js`. Adding a new
 provider or transport does need a new entry in the `exports` map. That changes the
 public surface, so state it clearly when reporting the work, and never bump the
-version yourself. See [`../rules/versioning.md`](../rules/versioning.md).
+version yourself. See `{shared}/rules/versioning.md`.
 
 ## 7. Check What Ships
 
@@ -75,7 +75,7 @@ separate task in that repository, following its own instructions.
 
 `feat({platform}): add {operation} for {platform}`, one logical change per commit,
 diff reviewed first. See
-[`../git/commit-conventions.md`](../git/commit-conventions.md).
+`{shared}/git/commit-conventions.md`.
 
 ## Verify Before Reporting Done
 
