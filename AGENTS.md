@@ -54,8 +54,14 @@ At the start of every session, before doing any work:
 4. Read [`.agents/index/memory-index.md`](.agents/index/memory-index.md) and load
    only the memory rows whose scope matches the current request, so you continue
    prior work instead of restarting it.
-5. Match the request against the trigger table below and load the instruction files
+5. Load the four mandatory standard files, whatever the request looks like.
+6. Match the request against the trigger table below and load the instruction files
    it names, local first, shared second.
+
+Four files load on **every** request rather than on a trigger — the task workflow,
+the branching strategy, the commit conventions, and the discovery protocol — along
+with the two permission gates that ride with them: ask before opening a pull
+request, ask before merging. See `{shared}/rules/shared-instructions.md` §H.
 
 If a rule conflicts with a habit, a default, or a template you would otherwise
 follow, the rule wins. If it conflicts with an explicit instruction from the user in
@@ -76,7 +82,6 @@ copy; the override table in
 | Write a commit message | `{shared}/git/commit-conventions.md` |
 | Open or update a pull request | `{shared}/git/pull-request-template.md` |
 | Write **any** commit, tag, PR, comment, or file that will be committed or posted | `{shared}/rules/no-session-links.md` |
-| Notice a rule worth adding, or content worth adding to an existing instruction | `{shared}/rules/discovery-protocol.md` |
 | Wonder whether something is local or shared, or need to override a shared rule | `{shared}/rules/shared-instructions.md` |
 | Decide where a new file goes | `{shared}/rules/directories.md` |
 | Resolve, connect, or fail to reach the shared set | `{shared}/rules/mcp-connector.md` |
