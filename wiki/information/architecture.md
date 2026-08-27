@@ -41,12 +41,15 @@ through subpath imports rather than the root.
    `readPropertiesFile` from `src/essential.js`.
 3. It checks that the key it needs exists, and throws a plain error if it is
    missing.
-4. It fills the `${placeholder}` segments of the URL template with
-   `replacePlaceholders`, using caller supplied values such as the organization,
-   repository, or project id.
-5. It calls the API with `axios`, sending the token in an `Authorization` header.
-6. On a transient failure it retries, up to a local limit of three attempts.
-7. It resolves with a plain object rather than throwing:
+4. It checks that the endpoint uses https with `requireHttpsUrl`, and throws
+   before any credential is used if it does not.
+5. It fills the `${placeholder}` segments of the URL template with
+   `resolveSecureUrl`, using caller supplied values such as the organization,
+   repository, or project id. That helper substitutes and then re-checks the
+   scheme, so the URL handed to `axios` is verified rather than assumed.
+6. It calls the API with `axios`, sending the token in an `Authorization` header.
+7. On a transient failure it retries, up to a local limit of three attempts.
+8. It resolves with a plain object rather than throwing:
    `{ success: true, message, ... }` or `{ success: false, message, status }`.
    Functions that take an array of entities run the calls with `Promise.all` and
    resolve with an array of these objects.
@@ -66,6 +69,14 @@ repocollaboratorurl=https://api.github.com/repos/${organization}/${repository}/c
 `=` so a value may itself contain `=`. `replacePlaceholders` substitutes every
 occurrence of each named placeholder. Keeping URLs here means an API path change
 is a one line edit in a data file.
+
+Because these endpoints are configuration rather than code, they are also the one
+place a secure transport could be lost. Every request this package makes carries
+the caller's token, so an endpoint edited down to `http://` would send that token
+in cleartext. `requireHttpsUrl` rejects a non-https endpoint, and
+`resolveSecureUrl` re-checks the scheme after substitution, so the guarantee holds
+for the URL actually sent rather than the one written in the file. Both throw; a
+downgraded endpoint fails loudly instead of degrading quietly.
 
 ## The AI Clients
 

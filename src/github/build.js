@@ -2,7 +2,8 @@ const axios = require('axios');
 const path = require('path');
 const {
     readPropertiesFile,
-    replacePlaceholders
+    requireHttpsUrl,
+    resolveSecureUrl
 } = require('../essential');
 
 /**
@@ -25,6 +26,8 @@ async function buildRepos(org, repos, vis, token) {
         throw new Error("Repository URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repourl, 'repourl');
+
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -46,7 +49,7 @@ async function buildRepos(org, repos, vis, token) {
         const data = { name: repo, visibility: vis };
 
         try {
-            const createResponse = await axios.post(replacePlaceholders(config.repourl, replacements), data, { headers });
+            const createResponse = await axios.post(resolveSecureUrl(config.repourl, replacements, 'repourl'), data, { headers });
 
             if (createResponse.status === 201) {
                 return { success: true, message: 'GitHub repository created successfully', repositoryName: repo, organizationName: org };

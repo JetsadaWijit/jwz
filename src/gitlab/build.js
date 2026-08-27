@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Creates multiple GitLab repositories.
@@ -18,6 +18,8 @@ async function buildRepos(group_id, repos, vis, token) {
         throw new Error("Repository URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repourl, 'repourl');
+
     const retryLimit = 3;
 
     /**
@@ -32,7 +34,7 @@ async function buildRepos(group_id, repos, vis, token) {
             'Authorization': `Bearer ${token}`,
         };
 
-        const url = replacePlaceholders(config.repourl, {}); // No replacement needed for base projects URL
+        const url = resolveSecureUrl(config.repourl, {}, 'repourl'); // No replacement needed for base projects URL
 
         const data = {
             name: repo,

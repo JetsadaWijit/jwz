@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Deletes multiple repositories from a GitLab group.
@@ -41,10 +41,12 @@ async function deleteRepos(repoIds, token, replacements = {}) {
         throw new Error("Repository-specific URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repospecificurl, 'repospecificurl');
+
     try {
         const deleteRequests = repoIds.map(async (repoId) => {
             const updatedReplacements = { ...replacements, project_id: repoId };
-            const url = replacePlaceholders(config.repospecificurl, updatedReplacements);
+            const url = resolveSecureUrl(config.repospecificurl, updatedReplacements, 'repospecificurl');
 
             try {
                 const response = await axios.delete(url, {

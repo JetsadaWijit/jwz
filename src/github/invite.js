@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Invites collaborators to multiple repositories in a given organization.
@@ -21,6 +21,8 @@ async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
         throw new Error("Collaborator URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repocollaboratorurl, 'repocollaboratorurl');
+
     const results = await Promise.all(repos.map(async (repo, i) => {
         const repoResults = [];
 
@@ -28,7 +30,7 @@ async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
             const replacements = { organization: org, repository: repo, collaborator: collaborators[i][j] };
 
             try {
-                await axios.put(replacePlaceholders(config.repocollaboratorurl, replacements), {}, {
+                await axios.put(resolveSecureUrl(config.repocollaboratorurl, replacements, 'repocollaboratorurl'), {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         Accept: 'application/vnd.github.v3+json',

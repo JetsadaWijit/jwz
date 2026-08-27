@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Generic function to remove collaborators from repositories.
@@ -19,6 +19,8 @@ async function removeCollaborators(repoIds, collaborators, token, replacements =
         throw new Error("API base URL (repocollaboratorurlmember) is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repocollaboratorurlmember, 'repocollaboratorurlmember');
+
     const baseUrl = config.repocollaboratorurlmember;
 
     if (!Array.isArray(repoIds) || !Array.isArray(collaborators) || repoIds.length !== collaborators.length) {
@@ -33,7 +35,7 @@ async function removeCollaborators(repoIds, collaborators, token, replacements =
 
         for (const collaborator of collaborators[i]) {
             const urlReplacements = { ...replacements, project_id: repoId, user_id: collaborator };
-            const requestUrl = replacePlaceholders(baseUrl, urlReplacements);
+            const requestUrl = resolveSecureUrl(baseUrl, urlReplacements, 'repocollaboratorurlmember');
 
             try {
                 const response = await axios.delete(requestUrl, {
