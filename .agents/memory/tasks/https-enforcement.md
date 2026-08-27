@@ -1,6 +1,7 @@
 ---
 name: memory-tasks-https-enforcement
 description: Record of making https a checked invariant in the API clients — the audit that found no plaintext endpoint, the guard added in its place, and the documentation re-synced with it.
+status: awaiting merge
 ---
 
 # Task: Enforce https At The Request Boundary
@@ -46,10 +47,10 @@ Recorded here so a future pass does not "fix" them.
 
 | # | Title | Scope | Repository | Branch | Files / areas | PR |
 |---|---|---|---|---|---|---|
-| 1 | Task record | The confirmed plan, written before any of it is built | `jwz` | `chore/https-enforcement-plan` | `.agents/memory/tasks/https-enforcement.md`, `.agents/index/memory-index.md` | |
-| 2 | Enforce https at the request boundary | Scheme guard in the shared helper, wired into all ten platform modules; agent docs re-synced | `jwz` | `fix/https-enforcement` | `src/essential.js`, `src/github/*.js`, `src/gitlab/*.js`, `.agents/api/api-client-conventions.md`, `.agents/security/secrets-and-tokens.md` | |
-| 3 | Re-sync the embedded code samples | The site quotes module source verbatim, so task 2 makes ten pages stale | `jwz-website` | `fix/https-enforcement` | `docs/github/*/index.html`, `docs/gitlab/*/index.html` | |
-| 4 | Release | Patch version, changelog, index rows, close this record | `jwz` | `chore/https-enforcement-release` | `package.json`, `wiki/logs/3/0/1/`, `.agents/index/logs-index.md`, this record | |
+| 1 | Task record | The confirmed plan, written before any of it is built | `jwz` | `chore/https-enforcement-plan` | `.agents/memory/tasks/https-enforcement.md`, `.agents/index/memory-index.md` |#14 |
+| 2 | Enforce https at the request boundary | Scheme guard in the shared helper, wired into all ten platform modules; agent docs re-synced | `jwz` | `fix/https-enforcement` | `src/essential.js`, `src/github/*.js`, `src/gitlab/*.js`, `.agents/api/api-client-conventions.md`, `.agents/security/secrets-and-tokens.md` |#15 |
+| 3 | Re-sync the embedded code samples | The site quotes module source verbatim, so task 2 makes ten pages stale | `jwz-website` | `fix/https-enforcement` | `docs/github/*/index.html`, `docs/gitlab/*/index.html` |jwz-website#11 |
+| 4 | Release | Patch version, changelog, index rows, close this record | `jwz` | `chore/https-enforcement-release` | `package.json`, `wiki/logs/3/0/1/`, `.agents/index/logs-index.md`, this record |#16 |
 
 Tasks 1, 2 and 4 stack in order within `jwz`. Task 3 is in another repository, so it
 cannot stack; it is ordered after task 2 because it copies the source task 2 writes,
@@ -104,3 +105,63 @@ guidance in `api-client-conventions.md`, the transport silence in
 
 Next task depends on: the module source committed here, which task 3 quotes verbatim
 into the website's documentation pages.
+
+### Task 4 — chore/https-enforcement-release
+
+What landed: the patch bump to `3.0.1` in `package.json`, the new
+`wiki/logs/3/0/1/CHANGELOG.md`, and its row at the top of
+`.agents/index/logs-index.md`.
+
+The changelog states plainly that no endpoint in this package was ever `http://`.
+The release removes the possibility of a downgrade rather than fixing an existing
+plaintext call, and saying so keeps the entry from overstating what shipped.
+
+Both version carriers moved together — `package.json` and the new log directory —
+because `{shared}/rules/versioning.md` counts the directory itself as a version
+claim. The bump was approved by the user before either was touched.
+
+No session digest was cut: this repository has no `.agents/memory/sessions/`
+files to fold.
+
+Still open at this point: the `PR` column of the plan table, which is filled in the
+closing entry below once the pull requests exist.
+
+### Closing entry
+
+All four pull requests are open and none is merged. The user held the merge gate
+deliberately, so this record is `awaiting merge` rather than `done`; the next
+session should confirm the merges before treating the work as landed.
+
+| # | Pull request | Branch | Base |
+|---|---|---|---|
+| 1 | `jwz` #14 | `chore/https-enforcement-plan` | `master` |
+| 2 | `jwz` #15 | `fix/https-enforcement` | `chore/https-enforcement-plan` |
+| 3 | `jwz-website` #11 | `fix/https-enforcement` | `master` |
+| 4 | `jwz` #16 | `chore/https-enforcement-release` | `fix/https-enforcement` |
+
+Pull request #14 carries the chain table, per `{shared}/planning/task-workflow.md`
+§F, so one page shows the whole shape of the work.
+
+**Two things to check at merge time.** Pull requests 2 and 4 are stacked, so their
+bases must be re-targeted to `master` before merging unless the forge does it when
+the base branch is deleted — otherwise the merge succeeds, the pull request reads as
+merged, and `master` stays behind with nothing signalling the gap. After the last
+merge, diff `master` against `chore/https-enforcement-release` and confirm the trees
+are identical rather than assuming it.
+
+**Not versioned here.** `jwz-website` publishes changed pages under its pull request
+11, but its version is untouched. Whether that warrants `wiki/logs/1/0/1/` there is a
+version decision for the user; nothing was staged towards it, since a staged bump is
+a bump.
+
+**Findings raised, not applied.** Four instruction files went stale and were left
+alone under `{shared}/rules/discovery-protocol.md`: `api-client-conventions.md`,
+`secrets-and-tokens.md` and `skills/add-api-module.md` here, and
+`knowledge/jwz-package-surface.md` in `jwz-website`. The first and third matter most
+— a module added from that skill today would not carry the guard.
+
+**One process note for the next session.** During this work a commit was briefly made
+in the wrong repository, because the shell's working directory had been left in
+`jwz-website` while the task was operating on `jwz`. It was caught before any push
+and reset, so nothing reached the remote and no branch history was affected. Absolute
+paths, rather than a remembered working directory, are what prevent it.
