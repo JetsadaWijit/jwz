@@ -1,7 +1,7 @@
 ---
 name: memory-tasks-https-enforcement
 description: Record of making https a checked invariant in the API clients — the audit that found no plaintext endpoint, the guard added in its place, and the documentation re-synced with it.
-status: awaiting merge
+status: done
 ---
 
 # Task: Enforce https At The Request Boundary
@@ -128,9 +128,8 @@ closing entry below once the pull requests exist.
 
 ### Closing entry
 
-All four pull requests are open and none is merged. The user held the merge gate
-deliberately, so this record is `awaiting merge` rather than `done`; the next
-session should confirm the merges before treating the work as landed.
+All six pull requests are merged. The merge outcome is recorded in the final entry
+at the foot of this file; the table below is the chain as it was raised.
 
 | # | Pull request | Branch | Base |
 |---|---|---|---|
@@ -174,8 +173,8 @@ above so the record still shows what was agreed before the work started.
 
 | # | Title | Scope | Repository | Branch | PR |
 |---|---|---|---|---|---|
-| 5 | Apply the three jwz instruction findings | Re-sync the conventions, the skill, and the security rule with the guard | `jwz` | `docs/https-guard-instructions` | |
-| 6 | Apply the website instruction finding | Correct the "resolve rather than throw" claim | `jwz-website` | `docs/https-guard-instructions` | |
+| 5 | Apply the three jwz instruction findings | Re-sync the conventions, the skill, and the security rule with the guard | `jwz` | `docs/https-guard-instructions` |#17 |
+| 6 | Apply the website instruction finding | Correct the "resolve rather than throw" claim | `jwz-website` | `docs/https-guard-instructions` |jwz-website#12 |
 
 ### Task 5 — docs/https-guard-instructions
 
@@ -203,3 +202,38 @@ neighbours:
 
 No file was added, moved or removed, so no index row changed. No version carrier was
 touched: an instruction change does not move the package version.
+
+### Final entry — merged and verified
+
+All six pull requests merged in order on 2026-08-27:
+
+| # | Pull request | Merge commit |
+|---|---|---|
+| 1 | `jwz` #14 | `2d3c634` |
+| 2 | `jwz` #15 | `538ec42` |
+| 3 | `jwz-website` #11 | `630e3ec` |
+| 4 | `jwz` #16 | `ef3da9d` |
+| 5 | `jwz` #17 | `79203d0` |
+| 6 | `jwz-website` #12 | `b7945e8` |
+
+Each stacked pull request was re-targeted to `master` before merging rather than
+after, so nothing landed on a feature branch. Both repositories were then checked the
+way `{shared}/planning/task-workflow.md` §F requires — `master` diffed against the
+last branch in each chain, empty both times, so the trees are identical and no work
+was left behind.
+
+The guard was re-verified against merged `master`, not against the working branch:
+with both properties files downgraded to `http://`, every platform entry point throws
+and no request is attempted, and `gitlab/invite.js` throws at `require()` time because
+its configuration guard runs at module scope. With the real files, nothing trips the
+guard. `package.json` on `master` reads `3.0.1`.
+
+Still open, and deliberately not decided here:
+
+* **`jwz-website` is unversioned for this work.** Its published pages changed under
+  pull request 11 but no log directory was created. Whether that warrants
+  `wiki/logs/1/0/1/` is the user's call.
+* **`jwz` still has no test suite.** The guard added by this work is covered by
+  nothing committed; the verification above was a throwaway harness against a stubbed
+  `axios`. This remains the largest gap in the repository, and it is now guarding a
+  security property, which raises the cost of the gap rather than lowering it.
