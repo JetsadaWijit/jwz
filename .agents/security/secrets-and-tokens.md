@@ -32,19 +32,46 @@ credentials. The package never owns a credential.
 * When adding a new error path, check what the message would contain if the caller
   printed it.
 
+## Never Send A Credential Over Plaintext
+
+Every operation here sends the caller's credential to an endpoint read at call time
+from `src/{platform}/properties/api.properties`. That file ships inside the package
+and is editable wherever it is installed, so the transport is configuration, and
+configuration is checked rather than assumed.
+
+* Assert the endpoint before using it: `requireHttpsUrl(config.{key}, '{key}')`
+  beside the key-exists guard, outside any `try`. Build the request URL with
+  `resolveSecureUrl`, which re-checks the scheme after substitution. Both throw on a
+  non-https endpoint. See
+  [`../api/api-client-conventions.md`](../api/api-client-conventions.md).
+* Never send a credential to a URL whose scheme has not been checked.
+* Never silently upgrade a plaintext endpoint to https. A downgraded endpoint is a
+  misconfiguration to surface, not one to paper over — repairing it quietly leaves
+  the broken file in place for the next caller.
+* An error raised by these guards names the properties key and the protocol only.
+  Never widen it to include the resolved URL, the request headers, or anything
+  derived from the credential.
+
+The AI clients in `src/ai/` and the Outlook mailer are exempt because they have no
+scheme to get wrong: each AI client calls a fixed `hostname` through the Node.js
+`https` module, and the mailer uses a nodemailer service preset. Converting either to
+a configurable endpoint brings it under this rule.
+
 ## Injected Values In URLs
 
 Values that come from the caller, organization names, repository names,
-collaborator names, are substituted into endpoint templates by
-`replacePlaceholders`. Substitute only into the placeholder positions defined in
-the properties file. Never build a URL by concatenating caller input onto a base
-string, because that lets a caller supplied value change the path or the host.
+collaborator names, are substituted into endpoint templates by `resolveSecureUrl`.
+Substitute only into the placeholder positions defined in the properties file. Never
+build a URL by concatenating caller input onto a base string, because that lets a
+caller supplied value change the path or the host — and a value that reaches the
+scheme or the authority defeats the transport guard, which is why the resolved URL is
+re-checked rather than only the template.
 
 ## Before Finishing A Task
 
 Review the security of every file you modified and committed on the branch:
-credential handling, injected input in URLs, and error output that could expose a
-token.
+credential handling, transport, injected input in URLs, and error output that could
+expose a token.
 
 ## Dependencies
 

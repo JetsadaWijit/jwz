@@ -165,3 +165,41 @@ in the wrong repository, because the shell's working directory had been left in
 `jwz-website` while the task was operating on `jwz`. It was caught before any push
 and reset, so nothing reached the remote and no branch history was affected. Absolute
 paths, rather than a remembered working directory, are what prevent it.
+
+## Follow-up: the findings, applied
+
+The user selected all four discovery findings and authorised merging. That adds two
+tasks, one per repository, appended rather than folded into the confirmed plan table
+above so the record still shows what was agreed before the work started.
+
+| # | Title | Scope | Repository | Branch | PR |
+|---|---|---|---|---|---|
+| 5 | Apply the three jwz instruction findings | Re-sync the conventions, the skill, and the security rule with the guard | `jwz` | `docs/https-guard-instructions` | |
+| 6 | Apply the website instruction finding | Correct the "resolve rather than throw" claim | `jwz-website` | `docs/https-guard-instructions` | |
+
+### Task 5 — docs/https-guard-instructions
+
+What landed: the three approved findings in this repository.
+
+* `api/api-client-conventions.md` — the helper block and substitution guidance now
+  name `resolveSecureUrl`, and "Guard The Configuration" gains the `requireHttpsUrl`
+  line with the reason it sits outside the `try`.
+* `skills/add-api-module.md` — step 2 requires an `https://` endpoint, step 3 shows
+  both guards in place, and the closing checklist tests for them.
+* `security/secrets-and-tokens.md` — a new "Never Send A Credential Over Plaintext"
+  section, and transport added to the end-of-task review.
+
+Two consistency repairs went with them, in the same files and not separately
+approved, because the approved edits would otherwise have contradicted their own
+neighbours:
+
+* `api-client-conventions.md` "Return Contract" said platform operations "resolve,
+  they do not reject" a few lines below a new section describing two guards that
+  throw. It now scopes that claim to what happens during the call and names the
+  configuration guards as the deliberate exception.
+* `secrets-and-tokens.md` "Injected Values In URLs" still credited
+  `replacePlaceholders` with the substitution the same file had just told the reader
+  not to use directly.
+
+No file was added, moved or removed, so no index row changed. No version carrier was
+touched: an instruction change does not move the package version.

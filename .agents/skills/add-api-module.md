@@ -27,6 +27,9 @@ For a Git platform operation, add the URL to
 `${placeholder}` segments for caller supplied values. Do not inline the URL in the
 function.
 
+**The URL must be `https://`.** Never add a plaintext endpoint: the guards in step 3
+reject one at runtime, and every request to it would carry the caller's credential.
+
 ## 3. Write The Function
 
 Follow [`../api/api-client-conventions.md`](../api/api-client-conventions.md):
@@ -34,6 +37,25 @@ CommonJS, four space indentation, single quotes, semicolons, shared helpers from
 `src/essential.js`, the `{ success, message, ... }` return contract, and the
 existing retry shape. Credentials are parameters only, per
 [`../security/secrets-and-tokens.md`](../security/secrets-and-tokens.md).
+
+Guard the endpoint before using it. After the key-exists check, and outside any
+`try`, assert the transport, then build the request URL through `resolveSecureUrl`:
+
+```js
+if (!config.repourl) {
+    throw new Error("Repository URL is missing in the configuration.");
+}
+
+requireHttpsUrl(config.repourl, 'repourl');
+
+// ...later, where the request is made
+const url = resolveSecureUrl(config.repourl, replacements, 'repourl');
+```
+
+Do not build a request URL with `replacePlaceholders`; it substitutes without
+checking the scheme. Do not move the `requireHttpsUrl` call inside the `try` that
+wraps the API call, or the module's own error handling will swallow it and report a
+misconfigured endpoint as a generic failure.
 
 End the file with `module.exports = {functionName};` for a single operation, or an
 object for a provider that exports several functions.
@@ -80,7 +102,9 @@ diff reviewed first. See
 ## Verify Before Reporting Done
 
 * The file exports exactly one operation, or one provider object.
-* The endpoint is in the properties file, not in the function.
+* The endpoint is in the properties file, not in the function, and it is `https://`.
+* `requireHttpsUrl` runs beside the key-exists guard, outside any `try`, and the
+  request URL is built with `resolveSecureUrl`.
 * No credential is hardcoded, logged, or concatenated into a URL.
 * The function is reachable from `src/{platform}/index.js`.
 * The JSDoc is complete.
