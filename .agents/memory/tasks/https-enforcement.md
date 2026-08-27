@@ -104,3 +104,23 @@ guidance in `api-client-conventions.md`, the transport silence in
 
 Next task depends on: the module source committed here, which task 3 quotes verbatim
 into the website's documentation pages.
+
+### Task 4 — chore/https-enforcement-release
+
+What landed: the patch bump to `3.0.1` in `package.json`, the new
+`wiki/logs/3/0/1/CHANGELOG.md`, and its row at the top of
+`.agents/index/logs-index.md`.
+
+The changelog states plainly that no endpoint in this package was ever `http://`.
+The release removes the possibility of a downgrade rather than fixing an existing
+plaintext call, and saying so keeps the entry from overstating what shipped.
+
+Both version carriers moved together — `package.json` and the new log directory —
+because `{shared}/rules/versioning.md` counts the directory itself as a version
+claim. The bump was approved by the user before either was touched.
+
+No session digest was cut: this repository has no `.agents/memory/sessions/`
+files to fold.
+
+Still open at this point: the `PR` column of the plan table, which is filled in the
+closing entry below once the pull requests exist.
