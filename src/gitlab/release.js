@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Fetches a release version from GitLab.
@@ -18,10 +18,12 @@ async function getReleaseVersion(groupId, projectId, version, token) {
         throw new Error("Release URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.reporeleaseurl, 'reporeleaseurl');
+
     const replacements = { group_id: groupId, project_id: projectId };
 
     try {
-        const url = replacePlaceholders(config.reporeleaseurl, replacements);
+        const url = resolveSecureUrl(config.reporeleaseurl, replacements, 'reporeleaseurl');
         const response = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`

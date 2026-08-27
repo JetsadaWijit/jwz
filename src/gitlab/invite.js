@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 const filePath = path.join(__dirname, 'properties', 'api.properties');
 const config = readPropertiesFile(filePath);
@@ -8,6 +8,8 @@ const config = readPropertiesFile(filePath);
 if (!config.repocollaboratorurl) {
     throw new Error(`Collaborator URL is missing in the configuration file: ${filePath}`);
 }
+
+requireHttpsUrl(config.repocollaboratorurl, 'repocollaboratorurl');
 
 /**
  * Invite collaborators to group repositories.
@@ -55,9 +57,9 @@ async function inviteCollaborators(groupId, repoIds, collaborators, token) {
         const repoResults = await Promise.all(collaborators[index].map(async (collaboratorId) => {
             if (!collaboratorId) return { collaborator: collaboratorId, success: false, error: "Invalid collaborator ID" };
 
-            const url = replacePlaceholders(config.repocollaboratorurl, {
+            const url = resolveSecureUrl(config.repocollaboratorurl, {
                 project_id: repoId
-            });
+            }, 'repocollaboratorurl');
 
             try {
                 const response = await axios.post(url, {

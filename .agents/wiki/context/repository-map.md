@@ -22,7 +22,7 @@ is a standalone async call to one HTTP API.
 | Path | Holds |
 |---|---|
 | `src/index.js` | The `main` entry. A placeholder; consumers use subpath exports. |
-| `src/essential.js` | Shared helpers `readPropertiesFile` and `replacePlaceholders`. |
+| `src/essential.js` | Shared helpers `readPropertiesFile` and `replacePlaceholders`, plus the transport guards `requireHttpsUrl` and `resolveSecureUrl`. |
 | `src/ai/` | One file per AI provider: `deepseek.js`, `openai.js`, `openrouter.js`. |
 | `src/github/` | GitHub operations, composed by `index.js`, with endpoints in `properties/api.properties`. |
 | `src/gitlab/` | GitLab operations, same shape as `src/github/`. |
@@ -64,9 +64,15 @@ output, no `dist/`, and nothing to regenerate before committing.
 
 * **Endpoint URLs are never inlined.** They live in each platform's
   `properties/api.properties` as templates with `${placeholder}` tokens, read by
-  `readPropertiesFile` and filled by `replacePlaceholders`. Adding an endpoint means
+  `readPropertiesFile` and filled by `resolveSecureUrl`. Adding an endpoint means
   adding a properties line, not a string literal — see
   [`../../api/api-client-conventions.md`](../../api/api-client-conventions.md).
+* **https is checked, not assumed.** Because endpoints are configuration read at
+  call time, every platform module calls `requireHttpsUrl` beside its
+  key-exists guard, and resolves the request URL through `resolveSecureUrl`. A
+  non-https endpoint throws before any credential is used, rather than sending the
+  caller's token in cleartext. This is why a new endpoint is added as a properties
+  line and never assembled by hand.
 * **Credentials are always parameters.** Library code never reads an environment
   variable and never stores a token.
 * **`.npmignore` decides the tarball.** `AGENTS.md`, `.agents/`, and `wiki/` are

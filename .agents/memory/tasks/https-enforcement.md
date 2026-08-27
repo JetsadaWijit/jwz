@@ -72,3 +72,35 @@ Left for later: the `PR` column above, filled by task 4 per
 `{shared}/planning/task-workflow.md` §F.
 
 Next task depends on: nothing beyond this record existing.
+
+### Task 2 — fix/https-enforcement
+
+What landed: `requireHttpsUrl` and `resolveSecureUrl` in `src/essential.js`, wired
+into all ten GitHub and GitLab modules — the first beside each existing key-exists
+guard, the second where the request URL is built. `replacePlaceholders` is kept and
+still exported; `resolveSecureUrl` is a thin wrapper over it, so nothing that
+imported the old helper is broken.
+
+Verified: all thirteen exported platform functions, against a stubbed `axios` that
+throws if it is reached. With a properties file downgraded to `http://`, every one
+throws `Endpoint "<key>" must use https` and no request is attempted. With the real
+https properties files, none of them trips the guard. 26 checks, 0 failures. The
+package has no test suite, so this ran as a throwaway harness rather than something
+committed — the gap is unchanged and still worth raising.
+
+**Deviation from the confirmed plan.** Task 2's row lists
+`.agents/api/api-client-conventions.md` and `.agents/security/secrets-and-tokens.md`
+as files to edit. Both are instruction files, and
+`{shared}/rules/change-propagation.md` is explicit that documentation is fixed in
+place but a stale *instruction* is not: it goes through
+`{shared}/rules/discovery-protocol.md` as a finding for the user to select. So they
+were left untouched and are carried as findings instead. Two documentation files
+that genuinely were stale were fixed here:
+`.agents/wiki/context/repository-map.md` and `wiki/information/architecture.md`.
+
+Left stale on purpose, pending the user's selection: the properties/`replacePlaceholders`
+guidance in `api-client-conventions.md`, the transport silence in
+`secrets-and-tokens.md`, and the module template in `skills/add-api-module.md`.
+
+Next task depends on: the module source committed here, which task 3 quotes verbatim
+into the website's documentation pages.

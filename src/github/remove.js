@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Removes collaborators from multiple repositories within an organization.
@@ -21,12 +21,14 @@ async function removeCollaboratorsFromRepos(org, repos, collaborators, token) {
         throw new Error("Collaborator URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repocollaboratorurl, 'repocollaboratorurl');
+
     const results = await Promise.all(repos.map(async (repo, i) => {
         const repoResults = [];
         for (let j = 0; j < collaborators[i].length; j++) {
             const replacements = { organization: org, repository: repo, collaborator: collaborators[i][j] };
             try {
-                await axios.delete(replacePlaceholders(config.repocollaboratorurl, replacements), {
+                await axios.delete(resolveSecureUrl(config.repocollaboratorurl, replacements, 'repocollaboratorurl'), {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         Accept: 'application/vnd.github.v3+json',

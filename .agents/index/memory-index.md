@@ -22,6 +22,12 @@ commit.
 |---|---|
 | [`../memory/state/repository-state.md`](../memory/state/repository-state.md) | The repository's current known state: what exists, what does not, and the next obvious step. |
 
+## decisions/
+
+| File | Purpose |
+|---|---|
+| [`../memory/decisions/https-guard-placement.md`](../memory/decisions/https-guard-placement.md) | Why the https check sits both at the config guard and at the request boundary, and why collapsing them reintroduces a swallowed error. |
+
 ## tasks/
 
 | File | Purpose |

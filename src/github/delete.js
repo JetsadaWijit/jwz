@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Deletes multiple repositories from an organization.
@@ -19,10 +19,12 @@ async function deleteRepos(org, repos, token) {
         throw new Error("Repository-specific URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.repospecificurl, 'repospecificurl');
+
     try {
         const deleteRequests = repos.map(async repo => {
             const replacements = { organization: org, repository: repo };
-            return await axios.delete(replacePlaceholders(config.repospecificurl, replacements), {
+            return await axios.delete(resolveSecureUrl(config.repospecificurl, replacements, 'repospecificurl'), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',

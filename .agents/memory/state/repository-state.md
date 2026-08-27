@@ -10,6 +10,10 @@ description: Current known state of jwz — what exists, what does not, how the 
 * A published npm package at version `3.0.0`, CommonJS, MIT licensed.
 * Six subpath exports: three AI providers, GitHub, GitLab, and the Outlook mailer.
 * Two runtime dependencies, `axios` and `nodemailer`.
+* A checked https invariant on the ten GitHub and GitLab modules: endpoints are
+  configuration, so `requireHttpsUrl` and `resolveSecureUrl` in `src/essential.js`
+  reject a non-https endpoint before any credential is used. The AI clients and the
+  mailer are structurally exempt.
 * A human wiki under `wiki/` with overview, architecture, setup, and one version log
   directory at `wiki/logs/3/0/0/`.
 * A local instruction set under `.agents/` covering only what is specific to this

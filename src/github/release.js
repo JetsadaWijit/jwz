@@ -1,6 +1,6 @@
 const axios = require('axios');
 const path = require('path');
-const { readPropertiesFile, replacePlaceholders } = require('../essential');
+const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
 
 /**
  * Fetches a specific release version from a repository.
@@ -21,10 +21,12 @@ async function getReleaseVersion(org, repo, version, token) {
         throw new Error("Release URL is missing in the configuration.");
     }
 
+    requireHttpsUrl(config.reporeleaseurl, 'reporeleaseurl');
+
     const replacements = { organization: org, repository: repo };
 
     try {
-        const response = await axios.get(replacePlaceholders(config.reporeleaseurl, replacements), {
+        const response = await axios.get(resolveSecureUrl(config.reporeleaseurl, replacements, 'reporeleaseurl'), {
             headers: {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/vnd.github.v3+json'
