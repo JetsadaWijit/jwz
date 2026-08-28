@@ -26,7 +26,7 @@ is a standalone async call to one HTTP API.
 | `src/ai/` | One file per AI provider: `deepseek.js`, `openai.js`, `openrouter.js`. |
 | `src/github/` | GitHub operations, composed by `index.js`, with endpoints in `properties/api.properties`. `collaborators.js` is shared machinery for `invite.js` and `remove.js`, not an operation and not published. |
 | `src/gitlab/` | GitLab operations, same shape as `src/github/`. |
-| `src/mailer/outlook/` | Outlook mail sending, composed by `index.js`. |
+| `src/mailer/outlook/` | Outlook mail sending, composed by `index.js`. The transport sets `requireTLS: true`, because the `Outlook365` preset opens in cleartext on port 587. |
 | `wiki/` | Documentation for people. Not published to npm. |
 | `.agents/` | This repository's own instructions, indexes, agent knowledge, and memory. Not published to npm. |
 | `.github/` | `FUNDING.yml` and `dependabot.yml`. There is no CI workflow. |

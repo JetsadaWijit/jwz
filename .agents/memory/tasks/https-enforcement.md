@@ -24,6 +24,12 @@ to act on. Every endpoint in the package is already `https://`:
 | `src/ai/*.js` | 3 hosts | `https.request`, no scheme string to get wrong |
 | `src/mailer/outlook/send.js` | — | nodemailer service preset, no endpoint |
 
+**Correction, 2026-08-27.** The mailer row above was wrong, and so was the exemption
+it justified. The `Outlook365` preset resolves to port 587 with `secure: false`, so the
+connection opened in cleartext and upgraded only if the server advertised STARTTLS. The
+row is left as written because it records what was assessed at the time; the finding and
+the fix are in `mailer-tls.md`.
+
 The defect is the absence of enforcement, not the presence of plaintext. Endpoints
 are not constants: `readPropertiesFile` reads them at call time from a file that
 ships inside the package and is editable in `node_modules`, `replacePlaceholders`
