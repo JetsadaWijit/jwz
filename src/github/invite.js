@@ -1,6 +1,5 @@
 const axios = require('axios');
-const path = require('path');
-const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../essential');
+const runCollaboratorRequests = require('./collaborators');
 
 /**
  * Invites collaborators to multiple repositories in a given organization.
@@ -14,39 +13,8 @@ const { readPropertiesFile, requireHttpsUrl, resolveSecureUrl } = require('../es
  * @throws {Error} If the collaborator URL is missing from the configuration.
  */
 async function inviteCollaboratorsToRepos(org, repos, collaborators, token) {
-    const filePath = path.join(__dirname, 'properties', 'api.properties');
-    const config = readPropertiesFile(filePath);
-
-    if (!config.repocollaboratorurl) {
-        throw new Error("Collaborator URL is missing in the configuration.");
-    }
-
-    requireHttpsUrl(config.repocollaboratorurl, 'repocollaboratorurl');
-
-    const results = await Promise.all(repos.map(async (repo, i) => {
-        const repoResults = [];
-
-        for (let j = 0; j < collaborators[i].length; j++) {
-            const replacements = { organization: org, repository: repo, collaborator: collaborators[i][j] };
-
-            try {
-                await axios.put(resolveSecureUrl(config.repocollaboratorurl, replacements, 'repocollaboratorurl'), {}, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        Accept: 'application/vnd.github.v3+json',
-                    },
-                });
-
-                repoResults.push({ collaborator: collaborators[i][j], success: true });
-            } catch (error) {
-                repoResults.push({ collaborator: collaborators[i][j], success: false, error: error.message });
-            }
-        }
-
-        return { repo, results: repoResults };
-    }));
-
-    return results;
+    return runCollaboratorRequests(org, repos, collaborators, token,
+        (url, headers) => axios.put(url, {}, { headers }));
 }
 
 module.exports = inviteCollaboratorsToRepos;
