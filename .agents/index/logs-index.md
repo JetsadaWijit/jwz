@@ -17,5 +17,6 @@ Any version directory added is reflected here in the same commit, newest first.
 
 | Version | Documents | Covers |
 |---|---|---|
+| [`3.0.2`](../../wiki/logs/3/0/2/CHANGELOG.md) | `CHANGELOG.md` | Removes the duplication between the GitHub collaborator operations, with no change to the published surface. |
 | [`3.0.1`](../../wiki/logs/3/0/1/CHANGELOG.md) | `CHANGELOG.md` | Makes https a checked invariant on the GitHub and GitLab clients, closing a silent credential-downgrade path. |
 | [`3.0.0`](../../wiki/logs/3/0/0/CHANGELOG.md) | `CHANGELOG.md` | First versioned log directory for the package, recording the agent instruction and documentation scaffold. |

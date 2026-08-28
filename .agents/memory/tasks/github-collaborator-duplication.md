@@ -131,3 +131,21 @@ which `collaborators.js` does not fit — so an agent reading either would have 
 the new helper as a violation rather than a deliberate exception.
 
 No file was added, moved or removed, so no index row changed.
+
+### Task 5 — chore/github-collaborators-release
+
+What landed: the patch bump to `3.0.2`, `wiki/logs/3/0/2/CHANGELOG.md`, and its row at
+the top of the logs index.
+
+Patch, and a release at all, because the shipped source genuinely differs: a consumer
+installing this gets three changed files even though no function, signature or result
+shape moved. `3.0.1` was already cut and its log merged, and a released version is
+never rewritten, so this rides in its own version rather than being folded backwards.
+
+The changelog carries an `Unchanged` section as well as the usual ones, because on a
+pure refactor what did *not* move is the part a consumer needs to trust, and the
+snapshot evidence belongs next to that claim rather than in a pull request that
+scrolls away.
+
+No session digest was cut: this repository still has no `.agents/memory/sessions/`
+files.
