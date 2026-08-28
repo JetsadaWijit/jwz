@@ -36,3 +36,4 @@ commit.
 | [`../memory/tasks/shared-set-sync.md`](../memory/tasks/shared-set-sync.md) | Record of syncing the entry point with shared set 0.10.0 — audit rerun, trigger row deleted, mandatory files made always-on. |
 | [`../memory/tasks/https-enforcement.md`](../memory/tasks/https-enforcement.md) | Record of making https a checked invariant in the API clients — the audit, the guard, and the documentation re-synced with it. |
 | [`../memory/tasks/github-collaborator-duplication.md`](../memory/tasks/github-collaborator-duplication.md) | Removing the structural duplication between the GitHub invite and remove operations, raised by a static-analysis duplication finding. |
+| [`../memory/tasks/mailer-tls.md`](../memory/tasks/mailer-tls.md) | Making STARTTLS mandatory in the Outlook mailer, and correcting the exemption this repository had wrongly granted it. |
