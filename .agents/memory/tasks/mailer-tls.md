@@ -1,7 +1,7 @@
 ---
 name: memory-tasks-mailer-tls
 description: Record of making STARTTLS mandatory in the Outlook mailer, and correcting the exemption this repository had wrongly granted it.
-status: in progress
+status: done
 ---
 
 # Task: Require STARTTLS In The Outlook Mailer
@@ -59,11 +59,11 @@ Rejected alternatives:
 
 | # | Title | Scope | Repository | Branch | PR |
 |---|---|---|---|---|---|
-| 1 | Task record | The plan, written before the work | `jwz` | `chore/mailer-tls-plan` | |
-| 2 | Require STARTTLS | The one line fix, and the memory and documentation it makes stale | `jwz` | `fix/mailer-tls` | |
-| 3 | Correct the security instruction | The exemption is false and tells the next agent this file is safe | `jwz` | `docs/mailer-tls-instruction` | |
-| 4 | Widen the Security Note | The page warns about storing the password, not sending it | `jwz-website` | `fix/mailer-tls` | |
-| 5 | Release | Patch version and changelog, carrying the correction to 3.0.1 | `jwz` | `chore/mailer-tls-release` | |
+| 1 | Task record | The plan, written before the work | `jwz` | `chore/mailer-tls-plan` |#24 |
+| 2 | Require STARTTLS | The one line fix, and the memory and documentation it makes stale | `jwz` | `fix/mailer-tls` |#25 |
+| 3 | Correct the security instruction | The exemption is false and tells the next agent this file is safe | `jwz` | `docs/mailer-tls-instruction` |#26 |
+| 4 | Widen the Security Note | The page warns about storing the password, not sending it | `jwz-website` | `fix/mailer-tls` |jwz-website#14 |
+| 5 | Release | Patch version and changelog, carrying the correction to 3.0.1 | `jwz` | `chore/mailer-tls-release` |#27 |
 
 ## Constraints
 
@@ -154,3 +154,44 @@ a footnote because a consumer who read the 3.0.1 claim needs to find it.
 The `Security` section states the exploit conditions honestly: an active attacker able
 to alter the server's capability list, not a passive observer. Overstating it would be
 as unhelpful as the original omission.
+
+### Final entry — merged and verified
+
+All five pull requests merged in order on 2026-08-27:
+
+| # | Pull request | Merge commit |
+|---|---|---|
+| 1 | `jwz` #24 | `a0093ed` |
+| 2 | `jwz` #25 | `f0c4543` |
+| 3 | `jwz` #26 | `e3fc33f` |
+| 4 | `jwz-website` #14 | `5729c4e` |
+| 5 | `jwz` #27 | `bbf8357` |
+
+Each stacked pull request was re-targeted to `master` before merging, and `master` was
+diffed against the last branch in each chain afterwards, empty in both repositories.
+
+**Both SMTP tests were re-run against merged `master`, not the branch.** Against a
+server refusing STARTTLS, no credential is sent and the call rejects with
+`Error upgrading connection with STARTTLS`. Against a server advertising STARTTLS with
+a trusted certificate, `AUTH` appears only on the upgraded socket, the message is
+accepted, and the call resolves with an info object. `package.json` reads `3.0.3`.
+
+## What this task should be remembered for
+
+The bug was not in code that was written carelessly. It was in an exemption that was
+reasoned into existence: "the mailer uses a service preset, so it has no scheme to get
+wrong." Every word of that is true and the conclusion is false, because the preset's
+default is cleartext. The wrong claim was then written into an instruction, a
+changelog, a decision record and a state file, where it would have kept an agent away
+from the file indefinitely.
+
+Two habits would have caught it, and both are now written down: check what a
+dependency's defaults actually resolve to rather than trusting that they are sensible,
+and treat an exemption as a claim needing evidence rather than as a conclusion.
+
+Still open, carried forward:
+
+* **`jwz` has no test suite.** Three rounds of security and refactoring work have now
+  been verified by harnesses that were written, run, and deleted. The SMTP pair used
+  here, one hostile server and one cooperative one, is the most reusable of them.
+* **`jwz-website` remains unversioned** across three rounds of published page changes.
