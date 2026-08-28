@@ -135,3 +135,22 @@ default and not a guarantee, is not specific to this repository or to mail. It i
 written locally because a consuming repository never writes into the shared set, and
 it is noted here as a candidate to raise against `LXAgents-MCP/shared-instruction`
 later. It is not being proposed there as part of this task.
+
+### Task 5 — chore/mailer-tls-release
+
+What landed: the patch bump to `3.0.3`, `wiki/logs/3/0/3/CHANGELOG.md`, and its row at
+the top of the logs index.
+
+Patch rather than minor: no signature or return value changed, and a deployment
+against Microsoft 365 is unaffected because 587 with STARTTLS is what Microsoft
+supports. The only case that now behaves differently is one that was already sending
+the password in the clear.
+
+The log carries a `Correction to 3.0.1` section. That release stated the mailer had no
+downgrade to guard against, which was false. A released log is never rewritten, so the
+correction goes in the next version's log, and it is a section of its own rather than
+a footnote because a consumer who read the 3.0.1 claim needs to find it.
+
+The `Security` section states the exploit conditions honestly: an active attacker able
+to alter the server's capability list, not a passive observer. Overstating it would be
+as unhelpful as the original omission.
