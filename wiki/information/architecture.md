@@ -16,6 +16,7 @@ src/
   github/
     index.js            re-export surface for jwz/github
     build.js delete.js invite.js release.js remove.js
+    collaborators.js    shared by invite.js and remove.js, not published
     properties/api.properties
   gitlab/
     index.js            re-export surface for jwz/gitlab
@@ -31,6 +32,12 @@ One file holds one operation. The folder `index.js` composes those files into th
 object that the `exports` map in `package.json` points at. `src/index.js` is the
 declared `main` but is currently empty, because consumers reach the package
 through subpath imports rather than the root.
+
+`src/github/collaborators.js` is the one file that is not an operation. Inviting a
+collaborator and removing one differ only in the HTTP verb they send, so the endpoint
+guard, the iteration over repositories and collaborators, and the per collaborator
+result shape live there once, and `invite.js` and `remove.js` each supply their own
+request. It is not listed in `index.js` and is not part of the published surface.
 
 ## How A Git Platform Call Works
 

@@ -24,7 +24,7 @@ is a standalone async call to one HTTP API.
 | `src/index.js` | The `main` entry. A placeholder; consumers use subpath exports. |
 | `src/essential.js` | Shared helpers `readPropertiesFile` and `replacePlaceholders`, plus the transport guards `requireHttpsUrl` and `resolveSecureUrl`. |
 | `src/ai/` | One file per AI provider: `deepseek.js`, `openai.js`, `openrouter.js`. |
-| `src/github/` | GitHub operations, composed by `index.js`, with endpoints in `properties/api.properties`. |
+| `src/github/` | GitHub operations, composed by `index.js`, with endpoints in `properties/api.properties`. `collaborators.js` is shared machinery for `invite.js` and `remove.js`, not an operation and not published. |
 | `src/gitlab/` | GitLab operations, same shape as `src/github/`. |
 | `src/mailer/outlook/` | Outlook mail sending, composed by `index.js`. |
 | `wiki/` | Documentation for people. Not published to npm. |
