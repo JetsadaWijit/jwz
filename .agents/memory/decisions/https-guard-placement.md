@@ -40,5 +40,12 @@ authority.
 
 **Not applied to `src/ai/`.** Those clients call `https.request` with a fixed
 `hostname` and no scheme string, so there is nothing to downgrade and no guard to
-add. `src/mailer/outlook/send.js` uses a nodemailer service preset for the same
-reason.
+add.
+
+**The mailer was excused here, and that was wrong.** This file originally said
+`src/mailer/outlook/send.js` was safe "for the same reason", because it uses a
+nodemailer service preset. The preset is the problem, not the protection: it selects
+port 587 with `secure: false`, so the connection opens in cleartext and upgrades only
+if the server offers STARTTLS. Corrected on 2026-08-27 by making the upgrade
+mandatory; see `../tasks/mailer-tls.md`. Treat "it uses a preset" as a reason to check
+what the preset resolves to, never as a reason to skip the check.

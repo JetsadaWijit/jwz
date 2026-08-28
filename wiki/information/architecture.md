@@ -108,6 +108,17 @@ transport for the `Outlook365` service on each call and resolves with the
 `nodemailer` info object. It is the one place in the package that rethrows rather
 than returning a result object.
 
+The transport sets `requireTLS: true`, and that is not decoration. The `Outlook365`
+preset resolves to port 587 with `secure: false`, so the connection opens in cleartext
+and is upgraded by STARTTLS afterwards. Left to its default, `nodemailer` attempts
+that upgrade only when the server advertises STARTTLS, which means a server that
+simply omits it receives the sender's password in the clear. `requireTLS` makes the
+upgrade mandatory: if it cannot be completed the call rejects and no credential is
+sent. `opportunisticTLS` and `ignoreTLS` both undo this and must stay unset.
+
+Port 465 with `secure: true` is not an alternative here. Microsoft 365 accepts SMTP
+authentication only on port 587 with STARTTLS.
+
 ## Dependencies
 
 `axios` for the Git platform HTTP calls and `nodemailer` for mail. Everything else

@@ -75,3 +75,40 @@ Rejected alternatives:
 ### Task 1 — chore/mailer-tls-plan
 
 What landed: this record and its `memory-index.md` row, before any of the work.
+
+### Task 2 — fix/mailer-tls
+
+What landed: `requireTLS: true` on the transport in `src/mailer/outlook/send.js`, with
+a comment saying why it is there and naming the two options that would undo it.
+
+Verified against the real exported function, not a copy of it, by redirecting the
+well known preset's host and port to a local server through the require cache:
+
+* **Hostile server**, advertising `AUTH` and refusing `STARTTLS`: no credential is
+  sent at all, and the call rejects with
+  `Error upgrading connection with STARTTLS: 454 TLS not available`. Before the fix
+  the same server received `AUTH PLAIN` carrying the password.
+* **Cooperative server**, advertising `STARTTLS` and presenting a certificate trusted
+  for the test: `AUTH` appears only on the TLS socket and never on the plaintext one,
+  the message is accepted, and `sendEmail` resolves with an info object as before.
+
+The second case is the one that mattered most: `requireTLS` must not break a working
+deployment, and it does not.
+
+Corrected in the same commit, because this fix disproves them:
+
+* `wiki/information/architecture.md` — the mailer section now explains the cleartext
+  start, what `requireTLS` does about it, and why port 465 is not an option.
+* `.agents/wiki/context/repository-map.md` — the `src/mailer/outlook/` row.
+* `.agents/memory/decisions/https-guard-placement.md` — this is the file that recorded
+  the wrong exemption. It now says so, and carries the lesson: "it uses a preset" is a
+  reason to check what the preset resolves to, not a reason to skip the check.
+* `.agents/memory/state/repository-state.md` — the mailer is no longer listed as
+  structurally exempt.
+* `.agents/memory/tasks/https-enforcement.md` — a correction note. The wrong audit row
+  is deliberately left in place, because it records what was assessed at the time and
+  rewriting it would hide that the assessment was made.
+
+Not done here: `.agents/security/secrets-and-tokens.md` still states the exemption.
+That is an instruction, gated by `{shared}/rules/discovery-protocol.md`, and it is
+task 3.

@@ -12,8 +12,12 @@ description: Current known state of jwz — what exists, what does not, how the 
 * Two runtime dependencies, `axios` and `nodemailer`.
 * A checked https invariant on the ten GitHub and GitLab modules: endpoints are
   configuration, so `requireHttpsUrl` and `resolveSecureUrl` in `src/essential.js`
-  reject a non-https endpoint before any credential is used. The AI clients and the
-  mailer are structurally exempt.
+  reject a non-https endpoint before any credential is used. The AI clients are
+  structurally exempt, calling a fixed host through the `https` module.
+* Mandatory STARTTLS in the Outlook mailer. The `Outlook365` preset opens in cleartext
+  on port 587, so `requireTLS: true` makes the upgrade compulsory and the call rejects
+  rather than sending the password in the clear. The mailer was wrongly recorded as
+  exempt from the transport rule until 2026-08-27.
 * A human wiki under `wiki/` with overview, architecture, setup, and one version log
   directory at `wiki/logs/3/0/0/`.
 * A local instruction set under `.agents/` covering only what is specific to this
