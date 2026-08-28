@@ -112,3 +112,26 @@ Corrected in the same commit, because this fix disproves them:
 Not done here: `.agents/security/secrets-and-tokens.md` still states the exemption.
 That is an instruction, gated by `{shared}/rules/discovery-protocol.md`, and it is
 task 3.
+
+### Task 3 — docs/mailer-tls-instruction
+
+What landed: the finding raised in task 2, once the user selected it.
+
+`.agents/security/secrets-and-tokens.md` no longer excuses the mailer. The AI clients
+keep their exemption, which is still true. A new "SMTP Is A Second Transport, And It
+Is Not Exempt" section replaces the wrong claim with three rules: set `requireTLS` on
+any authenticating SMTP transport, never set `opportunisticTLS` or `ignoreTLS`, and
+never treat a library preset as a security guarantee.
+
+The wrong reasoning is stated in the file rather than quietly deleted. The failure
+was not a typo, it was an inference that sounded right, and an instruction that shows
+the inference it is correcting is harder to re-derive.
+
+`.agents/skills/add-api-module.md` gains a checklist item, because that skill covers
+adding a new mail transport and its checklist is what an agent verifies against.
+
+**Possible promotion to the shared set.** The third rule, that a library preset is a
+default and not a guarantee, is not specific to this repository or to mail. It is
+written locally because a consuming repository never writes into the shared set, and
+it is noted here as a candidate to raise against `LXAgents-MCP/shared-instruction`
+later. It is not being proposed there as part of this task.

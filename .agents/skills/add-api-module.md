@@ -109,6 +109,9 @@ diff reviewed first. See
 
 * The file exports exactly one operation, or one provider object.
 * The endpoint is in the properties file, not in the function, and it is `https://`.
+* A mail transport sets `requireTLS: true` and sets neither `opportunisticTLS` nor
+  `ignoreTLS`, per
+  [`../security/secrets-and-tokens.md`](../security/secrets-and-tokens.md).
 * `requireHttpsUrl` runs beside the key-exists guard, outside any `try`, and the
   request URL is built with `resolveSecureUrl`.
 * No credential is hardcoded, logged, or concatenated into a URL.

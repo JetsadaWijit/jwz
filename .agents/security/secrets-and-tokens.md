@@ -52,10 +52,34 @@ configuration is checked rather than assumed.
   Never widen it to include the resolved URL, the request headers, or anything
   derived from the credential.
 
-The AI clients in `src/ai/` and the Outlook mailer are exempt because they have no
-scheme to get wrong: each AI client calls a fixed `hostname` through the Node.js
-`https` module, and the mailer uses a nodemailer service preset. Converting either to
-a configurable endpoint brings it under this rule.
+The AI clients in `src/ai/` are exempt because they have no scheme to get wrong: each
+calls a fixed `hostname` through the Node.js `https` module. Converting one to a
+configurable endpoint brings it under this rule.
+
+### SMTP Is A Second Transport, And It Is Not Exempt
+
+This file previously excused the Outlook mailer on the grounds that it "uses a
+nodemailer service preset". That was wrong, and it is recorded here rather than
+quietly deleted, because the reasoning is the kind that repeats.
+
+`service: 'Outlook365'` resolves to port 587 with `secure: false`. The connection
+opens in **cleartext** and is upgraded by STARTTLS afterwards, and by default
+nodemailer attempts that upgrade only when the server advertises it. A server that
+omits the advertisement receives the sender's password in the clear, and the send
+still succeeds.
+
+* **Set `requireTLS: true` on any SMTP transport that authenticates.** It makes the
+  upgrade mandatory, so a transport that cannot be secured rejects instead of falling
+  back to plaintext.
+* **Never set `opportunisticTLS` or `ignoreTLS`.** The first continues unencrypted
+  after a failed upgrade; the second skips the upgrade altogether. Either one restores
+  exactly the hole `requireTLS` closes.
+* **Never conclude a transport is safe because a library preset selected it.** Check
+  what the preset resolves to. A preset is a convenience default, not a security
+  guarantee, and the one here defaults to cleartext.
+
+The third point is the general one, and it is not specific to mail: it applies to any
+dependency whose defaults decide a transport on your behalf.
 
 ## Injected Values In URLs
 
