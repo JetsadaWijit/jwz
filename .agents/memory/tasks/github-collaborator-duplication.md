@@ -109,3 +109,25 @@ Not done here, and deliberately: `.agents/api/api-client-conventions.md` and
 new helper does not fit. Correcting an instruction is gated by
 `{shared}/rules/discovery-protocol.md`, so it is reported as a finding rather than
 edited.
+
+### Task 4 — docs/internal-helper-convention
+
+What landed: the finding raised in task 2, once the user selected it.
+
+`.agents/api/api-client-conventions.md` gains a "Shared Internal Helpers" section: when
+a non-operation file is allowed, that it is named for what it holds, that it stays out
+of the folder's `index.js`, that the guards live in it rather than in the operations,
+that it gets no page of its own on the site, and that the extraction has to be proved
+behaviour preserving. It also points at `src/gitlab/remove.js` as the right answer when
+the variants belong to one operation rather than two, so the two shapes are not
+confused.
+
+`.agents/skills/add-api-module.md` points at that rule and adds the timing constraint:
+do not create a helper while adding a single operation, extract it when a second one
+would otherwise duplicate the first.
+
+Both were previously stale in the same way — each said one exported function per file,
+which `collaborators.js` does not fit — so an agent reading either would have treated
+the new helper as a violation rather than a deliberate exception.
+
+No file was added, moved or removed, so no index row changed.

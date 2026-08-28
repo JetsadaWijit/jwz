@@ -20,6 +20,12 @@ provider, to the published surface of the package.
 Name the file after the operation, lowercase, no separators, matching the existing
 files: `build.js`, `delete.js`, `invite.js`, `release.js`, `remove.js`.
 
+A file that is not an operation is allowed only as a shared internal helper, under
+"Shared Internal Helpers" in
+[`../api/api-client-conventions.md`](../api/api-client-conventions.md). Do not create
+one while adding a single operation. Extract it later, when a second operation would
+otherwise duplicate the first, and never add it to the folder's `index.js`.
+
 ## 2. Add The Endpoint
 
 For a Git platform operation, add the URL to
