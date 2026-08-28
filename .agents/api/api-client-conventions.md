@@ -75,6 +75,37 @@ surfaced. The request is still not sent, but nobody learns why.
 the guard above fails loudly on a downgraded file, and the boundary check keeps the
 guarantee attached to the URL actually sent. Neither replaces the other.
 
+## Shared Internal Helpers
+
+One operation per file is the rule. A file under a platform folder that is **not** an
+operation is allowed only when two or more operations would otherwise be near copies
+of one another, and it has to earn that by removing duplication that already exists,
+never by anticipating duplication that might.
+
+`src/github/collaborators.js` is the worked example. Inviting a collaborator and
+removing one differ only in the HTTP verb, so the endpoint guard, the iteration over
+repositories and collaborators, and the per entity result shape live there once, and
+`invite.js` and `remove.js` each supply their own request and nothing else.
+
+When you extract one:
+
+* Name it for what it holds, not for an operation, so it is not mistaken for one.
+* **Keep it out of the folder's `index.js`.** It is not published, and adding it there
+  changes the public surface.
+* **Keep the guards in the helper**, not in the operations. The point of the
+  extraction is that the endpoint is read and checked in one place.
+* Leave each operation a wrapper that supplies only what differs between them.
+* Do not give it a page on the documentation site. It is internal, and it appears
+  there only as context inside the page of an operation that calls it.
+
+Prove the extraction changed nothing: capture the requests issued and the resolved and
+rejected values before and after, and compare them. A refactor that alters what a
+caller sees is not a refactor.
+
+Within one file, prefer the GitLab shape instead: `src/gitlab/remove.js` keeps a
+generic function and its thin wrappers together, which is the right answer when the
+variants belong to the same operation rather than to two.
+
 ## Return Contract
 
 Platform operations resolve, they do not reject, for anything that happens **during
