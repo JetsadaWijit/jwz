@@ -1,7 +1,7 @@
 ---
 name: memory-tasks-github-collaborator-duplication
 description: Record of removing the structural duplication between the GitHub invite and remove operations, raised by a static-analysis duplication finding.
-status: in progress
+status: done
 ---
 
 # Task: Remove The GitHub Collaborator Duplication
@@ -45,9 +45,9 @@ applies the same pattern to GitHub, across two files rather than within one, bec
 
 | # | Title | Scope | Repository | Branch | PR |
 |---|---|---|---|---|---|
-| 1 | Task record | The plan, written before the work | `jwz` | `chore/github-collaborators-plan` | |
-| 2 | Share the collaborator request loop | New internal helper; invite and remove become thin wrappers | `jwz` | `refactor/github-collaborators` | |
-| 3 | Re-sync the two collaborator pages | The site quotes both files verbatim | `jwz-website` | `fix/github-collaborators` | |
+| 1 | Task record | The plan, written before the work | `jwz` | `chore/github-collaborators-plan` |#19 |
+| 2 | Share the collaborator request loop | New internal helper; invite and remove become thin wrappers | `jwz` | `refactor/github-collaborators` |#20 |
+| 3 | Re-sync the two collaborator pages | The site quotes both files verbatim | `jwz-website` | `fix/github-collaborators` |jwz-website#13 |
 
 ## Constraints
 
@@ -149,3 +149,39 @@ scrolls away.
 
 No session digest was cut: this repository still has no `.agents/memory/sessions/`
 files.
+
+### Final entry — merged and verified
+
+All five pull requests merged in order on 2026-08-27:
+
+| # | Pull request | Merge commit |
+|---|---|---|
+| 1 | `jwz` #19 | `0df0b22` |
+| 2 | `jwz` #20 | `dd2055a` |
+| 3 | `jwz-website` #13 | `1588a3f` |
+| 4 | `jwz` #21 | `d526407` |
+| 5 | `jwz` #22 | `2fee705` |
+
+Tasks 4 and 5 were added mid flight: task 4 when the user selected the instruction
+finding raised in task 2, and task 5 when they approved the patch bump. Each stacked
+pull request was re-targeted to `master` before merging, and `master` was diffed
+against the last branch in each chain afterwards, empty in both repositories.
+
+**The behavioural baseline was replayed against merged `master`, not against the
+branch.** The twelve scenario snapshot captured from the original pre refactor code
+was run again on `master` and is byte identical. That is the claim worth keeping: the
+code on the default branch behaves exactly as the code did before any of this started.
+
+On `master` now: `package.json` reads `3.0.2`; `invite.js` is 18 non blank lines with
+6 shared with `remove.js`, down from 42 and 30; all ten platform pages on the site
+match their source exactly, with the two collaborator pages carrying the helper block
+as well.
+
+Still open, carried over and not addressed here:
+
+* **`jwz` has no test suite.** Both the https guard and this refactor were verified by
+  throwaway harnesses against a stubbed `axios`. The snapshot technique used here is
+  exactly what a committed test would do, which makes the absence more pointed rather
+  than less: the harness existed, ran, proved the change safe, and was deleted.
+* **`jwz-website` remains unversioned** across both this work and the https work, while
+  its published pages have changed twice.
